@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aadi Kaul — CS & Data</title>
+<title>Aadi Kaul | CS & Data</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -22,14 +22,14 @@ html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Lora',serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
 
-/* ── NAV ── */
+/* â”€â”€ NAV â”€â”€ */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:18px 64px;background:rgba(245,240,232,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
 .nav-logo{font-family:'Geist Mono',monospace;font-size:13px;color:var(--text);text-decoration:none;letter-spacing:.05em;}
 .nav-links{display:flex;gap:40px;list-style:none;}
 .nav-links a{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--muted);text-decoration:none;transition:color .2s;display:inline-block;position:relative;}
 .nav-links a:hover{color:var(--text);}
 
-/* ── HERO ── */
+/* â”€â”€ HERO â”€â”€ */
 #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:130px 64px 80px;position:relative;overflow:hidden;}
 #dot-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.6;}
 .hero-inner{position:relative;z-index:2;max-width:640px;margin:0 auto;text-align:center;}
@@ -40,18 +40,18 @@ h1.name em{font-style:italic;color:var(--accent);}
 
 
 
-/* ── HERO TAGLINE ── */
+/* â”€â”€ HERO TAGLINE â”€â”€ */
 .hero-tagline{font-size:15px;color:var(--muted);line-height:1.65;max-width:500px;margin:0 auto 36px;opacity:0;animation:up .5s .3s forwards;}
 .hero-tagline em{font-style:italic;color:var(--accent);}
 
-/* ── HERO CTA ── */
+/* â”€â”€ HERO CTA â”€â”€ */
 .hero-cta{display:flex;gap:14px;justify-content:center;margin-bottom:40px;opacity:0;animation:up .5s .35s forwards;}
 .btn{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.09em;padding:11px 24px;text-decoration:none;border:1px solid var(--text);color:var(--text);background:transparent;transition:all .2s;display:inline-block;}
 .btn:hover{background:var(--text);color:var(--bg);}
 .btn-fill{background:var(--text);color:var(--bg);}
 .btn-fill:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
 
-/* ── HERO THOUGHT ── */
+/* â”€â”€ HERO THOUGHT â”€â”€ */
 .hero-thought{margin-top:36px;opacity:0;animation:up .5s .7s forwards;}
 .ht-label{font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:8px;}
 .ht-text{font-size:16px;color:var(--text);font-family:'Lora',serif;font-style:italic;line-height:1.5;}
@@ -60,12 +60,12 @@ h1.name em{font-style:italic;color:var(--accent);}
 
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 
-/* ── SECTIONS ── */
+/* â”€â”€ SECTIONS â”€â”€ */
 .sec{padding:80px 64px 64px;}
 .glass-card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.8);border-radius:14px;padding:44px;box-shadow:0 2px 32px rgba(0,0,0,.05);}
 
 
-/* ── CONTACT BODY ── */
+/* â”€â”€ CONTACT BODY â”€â”€ */
 .contact-body{font-size:15px;color:var(--muted);line-height:1.85;max-width:520px;margin-bottom:36px;}
 .contact-body strong{color:var(--text);font-weight:500;}
 .contact-body em{font-style:italic;color:var(--accent);}
@@ -77,7 +77,7 @@ h1.name em{font-style:italic;color:var(--accent);}
 .sec-title em{font-style:italic;}
 hr.div{border:none;border-top:1px solid var(--border);margin:0 64px;}
 
-/* ── PROJECTS ── */
+/* â”€â”€ PROJECTS â”€â”€ */
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 .proj-card{background:rgba(255,255,255,.8);border:1px solid var(--border);border-radius:10px;overflow:hidden;position:relative;transition:box-shadow .3s,transform .3s,border-color .3s;}
 .proj-card:hover{box-shadow:0 14px 48px rgba(0,0,0,.1);transform:translateY(-4px);border-color:rgba(44,82,130,.35);}
@@ -107,18 +107,18 @@ hr.div{border:none;border-top:1px solid var(--border);margin:0 64px;}
 .ph-techs{display:flex;flex-wrap:wrap;gap:6px;}
 .ph-tech{font-family:'Geist Mono',monospace;font-size:10px;padding:4px 10px;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.8);border-radius:3px;}
 
-/* ── FORCE GRAPH (Skills) ── */
+/* â”€â”€ FORCE GRAPH (Skills) â”€â”€ */
 #force-canvas{width:100%;height:420px;cursor:none;display:block;}
 .skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
 .skills-copy p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:14px;}
 .skills-copy p strong{color:var(--text);font-weight:500;}
 .skills-hint{font-family:'Geist Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.1em;margin-top:20px;}
 
-/* ── ABOUT ── */
+/* â”€â”€ ABOUT â”€â”€ */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
 .about-text p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:14px;}
 .about-text p strong{color:var(--text);font-weight:500;}
-/* ── FOLDER TREE ── */
+/* â”€â”€ FOLDER TREE â”€â”€ */
 .folder-tree{border:1px solid var(--border);border-radius:8px;overflow:hidden;font-family:'Geist Mono',monospace;background:rgba(24,24,26,.03);}
 .ft-header{padding:9px 14px;border-bottom:1px solid var(--border);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);background:rgba(24,24,26,.04);display:flex;align-items:center;gap:8px;}
 .ft-header-dots{display:flex;gap:5px;}
@@ -143,7 +143,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:0 64px;}
 .glass-card.in .ft-folder:nth-child(3) .ft-folder-head{animation-delay:.3s;}
 .glass-card.in .ft-folder:nth-child(4) .ft-folder-head{animation-delay:.4s;}
 
-/* ── CONTACT ── */
+/* â”€â”€ CONTACT â”€â”€ */
 .contact-wrap{max-width:660px;margin:0 auto;text-align:center;}
 .contact-row{justify-content:center;}
 .contact-big{text-align:center;}
@@ -157,15 +157,15 @@ hr.div{border:none;border-top:1px solid var(--border);margin:0 64px;}
 .c-link{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.08em;padding:9px 18px;border:1px solid var(--border);color:var(--muted);text-decoration:none;transition:all .18s;background:rgba(255,255,255,.6);border-radius:3px;}
 .c-link:hover{border-color:var(--text);color:var(--text);}
 
-/* ── FOOTER ── */
+/* â”€â”€ FOOTER â”€â”€ */
 footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify-content:space-between;font-family:'Geist Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.07em;}
 
-/* ── REVEAL ── */
+/* â”€â”€ REVEAL â”€â”€ */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(0.16,1,0.3,1),transform .7s cubic-bezier(0.16,1,0.3,1);}
 .reveal.in{opacity:1;transform:none;}
 .d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
 
-/* ── SCROLL INDICATOR ── */
+/* â”€â”€ SCROLL INDICATOR â”€â”€ */
 .scroll-hint{position:absolute;bottom:52px;left:64px;font-family:'Geist Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.12em;display:flex;align-items:center;gap:10px;z-index:3;opacity:0;animation:up .5s 1.1s forwards;}
 .sh-line{width:36px;height:1px;background:var(--faint);}
 
@@ -206,12 +206,12 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
   </ul>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- â•â•â• HERO â•â•â• -->
 <section id="hero" style="position:relative;">
   <div class="hero-inner">
-    <p class="hero-eyebrow">Y2 Computer Science · SUTD · Singapore</p>
+    <p class="hero-eyebrow">Y3 Computer Science | SUTD | Singapore</p>
     <h1 class="name">Aadi<br><em>Kaul.</em></h1>
-    <p class="hero-tagline">Most excited by the intersections where <em>AI meets real, high-stakes decisions</em> — the kind that currently still rely more on gut feel than evidence.</p>
+    <p class="hero-tagline">Software engineer focused on building <em>reliable AI and data products end-to-end</em>, from data pipelines and APIs to production-ready interfaces that help teams make better decisions.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-fill">View projects</a>
       <a href="#contact" class="btn">Let's connect!</a>
@@ -229,15 +229,15 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
 
 <hr class="div">
 
-<!-- ═══ ABOUT ═══ -->
+<!-- â•â•â• ABOUT â•â•â• -->
 <div class="sec" id="about">
   <div class="glass-card reveal">
     <div class="sec-eyebrow">01 / about</div>
     <div class="about-grid">
       <div class="about-text">
         <div class="sec-title" style="margin-bottom:20px;font-size:36px;">Who <em>I am</em></div>
-        <p>Hey — I'm <strong>Aadi</strong>, a Year 2 CS student at <strong>SUTD</strong> in Singapore. I want to build companies that give businesses the same data leverage that only large institutions currently have.</p>
-        <p>My focus is <strong>applied AI and FinTech infrastructure</strong> — the layer where software has to work under real market pressure, not just on a benchmark. The gap between what data shows and what decisions get made is where I think the most interesting problems live.</p>
+        <p>Hey, I'm <strong>Aadi</strong>, a Year 3 CS student at <strong>SUTD</strong> in Singapore. I enjoy shipping software that turns messy real-world data into dependable tools people can use every day.</p>
+        <p>My focus is <strong>applied AI and FinTech infrastructure</strong>, systems where correctness, performance, and usability all matter. I like owning features end-to-end: data processing, backend APIs, model integration, and frontend delivery.</p>
         <p>Outside code: I'm climbing mountains, meeting new people, or going deep on something I know absolutely nothing about yet.</p>
       </div>
       <div class="folder-tree">
@@ -247,7 +247,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
         </div>
         <div class="ft-folder" id="ftf0">
           <div class="ft-folder-head" onclick="ftToggle('ftf0')">
-            <span class="ft-chevron">▾</span><span class="ft-folder-icon">📂</span><span class="ft-folder-name">ML &amp; Data</span>
+            <span class="ft-chevron">v</span><span class="ft-folder-icon">[dir]</span><span class="ft-folder-name">ML &amp; Data</span>
           </div>
           <div class="ft-files">
             <div class="ft-file"><div class="ft-file-bar" style="background:#2c5282"></div>Python</div>
@@ -259,7 +259,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
         </div>
         <div class="ft-folder closed" id="ftf1">
           <div class="ft-folder-head" onclick="ftToggle('ftf1')">
-            <span class="ft-chevron">▾</span><span class="ft-folder-icon">📂</span><span class="ft-folder-name">Web &amp; APIs</span>
+            <span class="ft-chevron">v</span><span class="ft-folder-icon">[dir]</span><span class="ft-folder-name">Web &amp; APIs</span>
           </div>
           <div class="ft-files">
             <div class="ft-file"><div class="ft-file-bar" style="background:#553c9a"></div>React</div>
@@ -271,7 +271,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
         </div>
         <div class="ft-folder closed" id="ftf2">
           <div class="ft-folder-head" onclick="ftToggle('ftf2')">
-            <span class="ft-chevron">▾</span><span class="ft-folder-icon">📂</span><span class="ft-folder-name">AI &amp; LLMs</span>
+            <span class="ft-chevron">v</span><span class="ft-folder-icon">[dir]</span><span class="ft-folder-name">AI &amp; LLMs</span>
           </div>
           <div class="ft-files">
             <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>HuggingFace</div>
@@ -282,7 +282,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
         </div>
         <div class="ft-folder closed" id="ftf3">
           <div class="ft-folder-head" onclick="ftToggle('ftf3')">
-            <span class="ft-chevron">▾</span><span class="ft-folder-icon">📂</span><span class="ft-folder-name">Infra &amp; Tools</span>
+            <span class="ft-chevron">v</span><span class="ft-folder-icon">[dir]</span><span class="ft-folder-name">Infra &amp; Tools</span>
           </div>
           <div class="ft-files">
             <div class="ft-file"><div class="ft-file-bar" style="background:#374151"></div>PostgreSQL</div>
@@ -298,7 +298,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
 
 <hr class="div">
 
-<!-- ═══ PROJECTS ═══ -->
+<!-- â•â•â• PROJECTS â•â•â• -->
 <div class="sec" id="projects">
   <div class="glass-card reveal">
     <div class="sec-eyebrow">02 / projects</div>
@@ -308,63 +308,105 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
       <div class="proj-card">
         <div class="pc-body">
           <div class="pc-head">
-            <div class="pc-kind">ML · FinTech · Security</div>
-            <div class="pc-title">FraudIQ — Fraud Intelligence Platform</div>
-            <div class="pc-desc">Merchants have no real-time fraud warning — by the time a chargeback hits, the money is gone. FraudIQ flags suspicious transactions before they clear.</div>
+            <div class="pc-kind">ML | FinTech | Security</div>
+            <div class="pc-title">FraudIQ: Fraud Intelligence Platform</div>
+            <div class="pc-desc">Merchants often discover fraud after chargebacks. FraudIQ scores transactions in real time and exposes actionable decline/review decisions through a production-style web workflow.</div>
           </div>
           <div class="pc-chart"><canvas id="ch0"></canvas></div>
-          <div class="pc-stat"><div class="pc-val" id="sv0">—</div><div class="pc-lbl">detection accuracy</div></div>
+          <div class="pc-stat"><div class="pc-val" id="sv0">N/A</div><div class="pc-lbl">detection accuracy</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">FraudIQ — Fraud Intelligence Platform</div><div class="ph-body">Problem: merchants had no tool to act on fraud before payment cleared. Built a full ML pipeline on velocity, geo and behavioural signals, wrapped in a decision-first dashboard. A probability score is useless — "decline this transaction" is actionable.</div></div>
+            <div><div class="ph-title">FraudIQ: Fraud Intelligence Platform</div><div class="ph-body">Built an end-to-end fraud detection stack using engineered velocity, geo, and behavior features, model scoring, and a React + FastAPI decision UI. Focused on low-latency predictions, clear operator actions, and architecture that can scale to higher transaction throughput.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">XGBoost</span><span class="ph-tech">scikit-learn</span><span class="ph-tech">React</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span></div>
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://fraud-detection-jade.vercel.app/" target="_blank" class="pc-live">View Live ↗</a>
-          <a href="https://github.com/nobaadi/fraud-detection" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub ↗</a>
-          <span class="pc-hint">hover ·</span>
+          <a href="https://fraud-detection-jade.vercel.app/" target="_blank" class="pc-live">View Live -></a>
+          <a href="https://github.com/nobaadi/fraud-detection" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub -></a>
+          <span class="pc-hint">hover |</span>
         </div>
       </div>
 
       <div class="proj-card">
         <div class="pc-body">
           <div class="pc-head">
-            <div class="pc-kind">Data · Consumer Tech · SG</div>
-            <div class="pc-title">PriceWatch SG — Inflation Tracker</div>
-            <div class="pc-desc">Singapore's official inflation numbers said things were fine. My grocery bill disagreed. PriceWatch lets you measure what rising prices actually cost you, not what the headline says.</div>
+            <div class="pc-kind">Data | Consumer Tech | SG</div>
+            <div class="pc-title">PriceWatch SG: Inflation Tracker</div>
+            <div class="pc-desc">Headline CPI does not always reflect household-level impact. PriceWatch SG ingests category-level data and visualizes personal inflation trends with interactive comparisons.</div>
           </div>
           <div class="pc-chart"><canvas id="ch1"></canvas></div>
-          <div class="pc-stat"><div class="pc-val" id="sv1">—</div><div class="pc-lbl">price data points tracked</div></div>
+          <div class="pc-stat"><div class="pc-val" id="sv1">N/A</div><div class="pc-lbl">price data points tracked</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">PriceWatch SG — Inflation Tracker</div><div class="ph-body">Problem: headline CPI masked the real inflation felt by households. Built a personal basket tracker against SingStat data — food, transport, housing, utilities — with divergence charts that show the gap between official statistics and lived experience.</div></div>
+            <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Implemented data ingestion and normalization around SingStat sources, then built chart-driven UI flows to compare official inflation against user-defined consumption baskets. Prioritized clean API integration and a frontend that stays fast as data volume grows.</div></div>
             <div class="ph-techs"><span class="ph-tech">React</span><span class="ph-tech">Chart.js</span><span class="ph-tech">SingStat API</span><span class="ph-tech">Python</span><span class="ph-tech">Node.js</span><span class="ph-tech">Vercel</span></div>
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://pricewatch-sg.vercel.app/" target="_blank" class="pc-live">View Live ↗</a>
-          <a href="https://github.com/nobaadi/pricewatch-sg" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub ↗</a>
-          <span class="pc-hint">hover ·</span>
+          <a href="https://pricewatch-sg.vercel.app/" target="_blank" class="pc-live">View Live -></a>
+          <a href="https://github.com/nobaadi/pricewatch-sg" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub -></a>
+          <span class="pc-hint">hover |</span>
         </div>
       </div>
 
       <div class="proj-card">
         <div class="pc-body">
           <div class="pc-head">
-            <div class="pc-kind">Systems · CS Education · Tools</div>
+            <div class="pc-kind">Systems | CS Education | Tools</div>
             <div class="pc-title">Cache Memory Simulator</div>
-            <div class="pc-desc">CS students pass architecture exams but rarely build real intuition for cache behaviour. This simulator makes it visual, interactive, and step-by-step.</div>
+            <div class="pc-desc">Cache concepts are hard to internalize without interaction. This simulator executes traces step-by-step with visual state transitions and replacement-policy comparisons.</div>
           </div>
           <div class="pc-chart"><canvas id="ch2"></canvas></div>
-          <div class="pc-stat"><div class="pc-val" id="sv2">—</div><div class="pc-lbl">avg cache hit rate</div></div>
+          <div class="pc-stat"><div class="pc-val" id="sv2">N/A</div><div class="pc-lbl">avg cache hit rate</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">Cache Memory Simulator</div><div class="ph-body">Problem: cache behaviour is abstract without visualisation — students memorise but don't develop intuition. Built a Canvas-rendered simulator with 4 replacement policies, step-by-step trace execution, and real-time hit/miss counters. Used by peers at SUTD.</div></div>
+            <div><div class="ph-title">Cache Memory Simulator</div><div class="ph-body">Designed a TypeScript simulation engine and Canvas renderer for cache traces, including multiple replacement strategies and real-time hit/miss analytics. Emphasized correctness, deterministic state updates, and debuggable step execution for teaching use.</div></div>
             <div class="ph-techs"><span class="ph-tech">React</span><span class="ph-tech">TypeScript</span><span class="ph-tech">Canvas API</span><span class="ph-tech">Next.js</span><span class="ph-tech">Tailwind</span><span class="ph-tech">Vercel</span></div>
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://cachesimulator-mb5mydoky-nobaadis-projects.vercel.app/simulator" target="_blank" class="pc-live">View Live ↗</a>
-          <a href="https://github.com/nobaadi/cachesimulator-sg" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub ↗</a>
-          <span class="pc-hint">hover ·</span>
+          <a href="https://cachesimulator-mb5mydoky-nobaadis-projects.vercel.app/simulator" target="_blank" class="pc-live">View Live -></a>
+          <a href="https://github.com/nobaadi/cachesimulator-sg" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub -></a>
+          <span class="pc-hint">hover |</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-body">
+          <div class="pc-head">
+            <div class="pc-kind">Full-Stack | Data Engineering | PropTech</div>
+            <div class="pc-title">HDB Intelligence: Singapore Resale Analytics</div>
+            <div class="pc-desc">HDB resale analysis is fragmented across sources. HDB Intelligence consolidates market data into one full-stack app with forecasting, filtering, and town-level comparative exploration.</div>
+          </div>
+          <div class="pc-chart"><canvas id="ch3"></canvas></div>
+          <div class="pc-stat"><div class="pc-val" id="sv3">N/A</div><div class="pc-lbl">2024 HDB RPI benchmark</div></div>
+          <div class="pc-hover">
+            <div><div class="ph-title">HDB Intelligence: Singapore Resale Analytics</div><div class="ph-body">Built a data-rich frontend with modular components for KPI tracking, searchable transactions, pricing estimation, and town-to-town comparison. Used data.gov.sg datasets, custom state logic, and chart interactions to make large resale datasets usable in real time.</div></div>
+            <div class="ph-techs"><span class="ph-tech">HTML</span><span class="ph-tech">CSS</span><span class="ph-tech">JavaScript</span><span class="ph-tech">Chart.js</span><span class="ph-tech">data.gov.sg API</span><span class="ph-tech">Analytics UI</span></div>
+          </div>
+        </div>
+        <div class="pc-footer">
+          <a href="projects/hdb-intelligence.html" target="_blank" class="pc-live">View Live -></a>
+          <a href="projects/hdb-intelligence.zip" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">Source ZIP -></a>
+          <span class="pc-hint">hover |</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-body">
+          <div class="pc-head">
+            <div class="pc-kind">AI Engineering | Full-Stack | FinTech</div>
+            <div class="pc-title">EarningsIQ: Financial Report Intelligence</div>
+            <div class="pc-desc">Earnings reports are long and repetitive to analyze manually. EarningsIQ provides retrieval-based Q&A, passage ranking, and cross-report metric comparison in a single workflow.</div>
+          </div>
+          <div class="pc-chart"><canvas id="ch4"></canvas></div>
+          <div class="pc-stat"><div class="pc-val" id="sv4">N/A</div><div class="pc-lbl">reports indexed for analysis</div></div>
+          <div class="pc-hover">
+            <div><div class="ph-title">EarningsIQ: Financial Report Intelligence</div><div class="ph-body">Implemented a retrieval pipeline that chunks reports, scores relevance, and surfaces grounded passages for QA. Built UI state flows for chat, metrics, and comparisons, plus API-key based live mode integration for real model-backed responses.</div></div>
+            <div class="ph-techs"><span class="ph-tech">HTML</span><span class="ph-tech">CSS</span><span class="ph-tech">JavaScript</span><span class="ph-tech">RAG-style retrieval</span><span class="ph-tech">Anthropic API</span><span class="ph-tech">Metrics dashboard</span></div>
+          </div>
+        </div>
+        <div class="pc-footer">
+          <a href="projects/earningsiq.html" target="_blank" class="pc-live">View Live -></a>
+          <a href="projects/earningsiq.zip" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">Source ZIP -></a>
+          <span class="pc-hint">hover |</span>
         </div>
       </div>
 
@@ -374,17 +416,17 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
 
 <hr class="div">
 
-<!-- ═══ SKILLS ═══ -->
+<!-- â•â•â• SKILLS â•â•â• -->
 <div class="sec" id="skills">
   <div class="glass-card reveal">
     <div class="sec-eyebrow">03 / skills</div>
     <div class="skills-layout">
       <div class="skills-copy">
         <div class="sec-title" style="margin-bottom:20px;">My <em>skills</em></div>
-        <p>I work across the <strong>full product stack</strong> — raw data pipelines and ML models on one end, REST APIs and interactive frontends on the other. I care as much about how something feels to use as how it works under the hood.</p>
-        <p>I think a lot about <strong>product and business</strong> too. Unit economics, go-to-market, feedback loops. Good UI surfaces the right signal. Good code needs a business that works around it.</p>
-        <p>Currently most interested in: <strong>LLMs, applied AI, FinTech infrastructure</strong> and <strong>developer tooling</strong>.</p>
-        <div class="skills-hint">↗ drag the nodes · they're force-directed</div>
+        <p>I work across the <strong>full product stack</strong>, from raw data pipelines and ML models on one end to REST APIs and interactive frontends on the other. I care as much about how something feels to use as how it works under the hood.</p>
+        <p>I care about <strong>engineering quality</strong>: maintainable code, clear interfaces, measurable performance, and shipping features that are easy for teammates to extend.</p>
+        <p>Currently most interested in: <strong>backend systems, applied AI, FinTech infrastructure</strong>, and <strong>developer tooling</strong>.</p>
+        <div class="skills-hint">drag the nodes | they're force-directed</div>
       </div>
       <canvas id="force-canvas"></canvas>
     </div>
@@ -393,34 +435,34 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
 
 <hr class="div">
 
-<!-- ═══ CONTACT ═══ -->
+<!-- â•â•â• CONTACT â•â•â• -->
 <div class="sec" id="contact">
   <div class="glass-card contact-wrap reveal">
     <div class="sec-eyebrow">04 / contact</div>
-    <div class="contact-big">Interested in working<br>together? <em>Would love to talk!</em></div>
-    <div class="contact-body">I'm looking to join a founding team or work at a company where I can move between <strong>data infrastructure and product</strong>. I care most about problems that are specific, unglamorous, and solvable, the kind that affect real people every day.<br><br>If you're building something ambitious (<em>or if you just want to argue about whether distribution beats product</em>), I'd genuinely like to hear from you.</div>
+    <div class="contact-big">Open to <em>software engineering</em><br>internships and roles.</div>
+    <div class="contact-body">I'm looking for software engineering opportunities where I can contribute across <strong>backend, data, and AI-enabled product development</strong>. I enjoy shipping features, improving system reliability, and collaborating closely with product and design to deliver useful software.<br><br>If your team is hiring for SWE or full-stack developer roles, I'd love to connect.</div>
     <div class="contact-row">
       <div class="contact-links">
-        <a href="mailto:aadikaul@outlook.com" class="c-link">Email ↗</a>
-        <a href="https://www.linkedin.com/in/aadi-kaul" target="_blank" class="c-link">LinkedIn ↗</a>
-        <a href="Aadi_Kaul_Resume_2026.pdf" target="_blank" class="c-link">Resume ↗</a>
+        <a href="mailto:aadikaul@outlook.com" class="c-link">Email -></a>
+        <a href="https://www.linkedin.com/in/aadi-kaul" target="_blank" class="c-link">LinkedIn -></a>
+        <a href="Aadi_Kaul_Resume_2026.pdf" target="_blank" class="c-link">Resume -></a>
       </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <span>© 2026 Aadi Kaul</span>
-  <span>CS · SUTD · Singapore</span>
+  <span>(c) 2026 Aadi Kaul</span>
+  <span>CS | SUTD | Singapore</span>
 </footer>
 
 <script>
 if('scrollRestoration' in history) history.scrollRestoration='manual';
 window.scrollTo(0,0);
 
-/* ══════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SCROLL DOT-GRID BACKGROUND
-══════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 (function(){
   const c=document.getElementById('dot-canvas');
   const ctx=c.getContext('2d');
@@ -455,9 +497,9 @@ window.scrollTo(0,0);
   draw();
 })();
 
-/* ══════════════════════════════════════════════
-   TICKER — "currently thinking about"
-══════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TICKER â€” "currently thinking about"
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 (function(){
   const topics=[
     'why do 88% of SG SMEs still make decisions without data?',
@@ -488,14 +530,16 @@ window.scrollTo(0,0);
 
 
 
-/* ══════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    PROJECT SPARKLINE CHARTS
    Animate on scroll-in, count up stat
-══════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 const chartDefs=[
   {data:[55,62,68,74,79,84,88,91,93,94],color:'#2c5282',target:94,suffix:'%',id:'sv0'},
   {data:[20,45,72,95,120,145,163,179,191,200],color:'#276749',target:200,suffix:'+ prices',id:'sv1'},
   {data:[42,54,63,70,76,81,84,86,87,87],color:'#744210',target:87,suffix:'% hit rate',id:'sv2'},
+  {data:[100,108,117,126,132,136,138,137,138,139],color:'#2f855a',target:138.5,suffix:' RPI',id:'sv3'},
+  {data:[1,1,2,2,3,3,3,4,4,4],color:'#2b6cb0',target:4,suffix:' reports',id:'sv4'},
 ];
 function drawSparkline(el,def,anim){
   const ctx=el.getContext('2d');
@@ -541,11 +585,11 @@ pcards.forEach((card,idx)=>{
   obs.observe(card);
 });
 
-/* ══════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    FORCE-DIRECTED SKILL GRAPH
    Real physics: attraction along edges,
    repulsion between nodes, drag to interact.
-══════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 (function(){
   const canvas=document.getElementById('force-canvas');
   const ctx=canvas.getContext('2d');
@@ -584,7 +628,7 @@ pcards.forEach((card,idx)=>{
     [1,2],[1,5],[1,7],                            // Pandas
     [5,6],[5,17],[5,18],                          // SQL
     [7,8],[9,10],[10,11],                         // ML chain
-    [11,22],                                      // LLMs → Business
+    [11,22],                                      // LLMs -> Business
     [12,13],[12,14],[13,14],                      // React/TS/Next
     [15,16],                                      // FastAPI-Node
     [19,20],[19,21],                              // DevOps
@@ -732,9 +776,9 @@ pcards.forEach((card,idx)=>{
   window.addEventListener('resize',()=>{if(running){initPositions();}});
 })();
 
-/* ══════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SCROLL REVEAL
-══════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 const revObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
 },{threshold:0,rootMargin:'0px 0px -40px 0px'});
@@ -747,13 +791,13 @@ document.addEventListener('click',e=>{
   document.body.appendChild(d);setTimeout(()=>d.remove(),650);
 });
 
-/* ── FOLDER TREE TOGGLE ── */
+/* â”€â”€ FOLDER TREE TOGGLE â”€â”€ */
 function ftToggle(id){
   const f=document.getElementById(id);
   f.classList.toggle('closed');
 }
 
-/* ── HERO PARALLAX FADE ── */
+/* â”€â”€ HERO PARALLAX FADE â”€â”€ */
 (function(){
   const inner=document.querySelector('.hero-inner');
   if(!inner)return;
@@ -788,3 +832,5 @@ window.addEventListener('scroll',()=>{
 </script>
 </body>
 </html>
+
+

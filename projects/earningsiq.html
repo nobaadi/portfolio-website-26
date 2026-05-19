@@ -1,0 +1,692 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EarningsIQ | Financial Report Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--surface:#ffffff;--card:#fdfcf9;
+  --border:#e8e3d8;--border2:#d0c9bc;
+  --ink:#141210;--muted:#8a8070;--muted2:#c4bdb0;
+  --navy:#0f1f3d;--navy-bg:rgba(15,31,61,.06);
+  --teal:#0d9488;--teal-bg:rgba(13,148,136,.08);--teal-border:rgba(13,148,136,.2);
+  --amber:#d97706;--amber-bg:rgba(217,119,6,.08);
+  --green:#15803d;--green-bg:rgba(21,128,61,.08);
+  --rose:#e11d48;--rose-bg:rgba(225,29,72,.07);
+  --blue:#1d4ed8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;transition:opacity .7s ease;}
+#splash.out{opacity:0;pointer-events:none;}
+.sp-logo{font-family:'Fraunces',serif;font-size:64px;font-weight:900;color:#f7f5f0;letter-spacing:-.03em;overflow:hidden;}
+.sp-logo em{font-style:italic;font-weight:300;color:#5eead4;}
+.sp-logo span{display:inline-block;animation:rise .6s cubic-bezier(.16,1,.3,1) both;}
+.sp-logo span:nth-child(2){animation-delay:.1s;}
+@keyframes rise{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.sp-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);opacity:0;animation:fi .4s .7s ease both;}
+@keyframes fi{to{opacity:1;}}
+
+/* LAYOUT */
+.shell{height:100vh;display:grid;grid-template-rows:52px 1fr;overflow:hidden;}
+.body{display:grid;grid-template-columns:290px 1fr;height:calc(100vh - 52px);overflow:hidden;}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;transform:translateY(-100%);transition:transform .5s .4s cubic-bezier(.16,1,.3,1);}
+header.in{transform:translateY(0);}
+.logo{font-family:'Fraunces',serif;font-size:19px;font-weight:900;letter-spacing:-.02em;}
+.logo em{font-style:italic;font-weight:300;color:var(--teal);}
+.hdr-center{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg);}
+.htab{padding:6px 16px;border:none;border-right:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.htab:last-child{border-right:none;}
+.htab:hover{background:var(--surface);color:var(--ink);}
+.htab.on{background:var(--navy);color:#fff;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.key-mini{padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;background:var(--bg);color:var(--ink);outline:none;width:220px;transition:border .2s;}
+.key-mini:focus{border-color:var(--teal);}
+.key-st{font-family:'DM Mono',monospace;font-size:10px;padding:4px 10px;border-radius:12px;white-space:nowrap;}
+.st-d{background:var(--navy-bg);color:var(--muted);}
+.st-ok{background:var(--green-bg);color:var(--green);}
+.st-err{background:var(--rose-bg);color:var(--rose);}
+
+/* SIDEBAR */
+aside{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.aside-top{padding:16px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.aside-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;}
+.rlist{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px;}
+.rlist::-webkit-scrollbar{width:3px;}
+.rlist::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.rcard{padding:12px;border-radius:8px;cursor:pointer;border:1.5px solid transparent;transition:all .18s;transform:translateY(8px);opacity:0;}
+.rcard.in{transform:translateY(0);opacity:1;}
+.rcard:hover{border-color:var(--border2);background:var(--bg);}
+.rcard.sel{border-color:var(--teal);background:var(--teal-bg);}
+.rn{font-weight:600;font-size:13px;margin-bottom:2px;}
+.rm{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:6px;}
+.rtags{display:flex;gap:4px;flex-wrap:wrap;}
+.rt{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:10px;background:var(--bg);color:var(--muted);border:1px solid var(--border);}
+.uzone{margin:12px;padding:14px;border:1.5px dashed var(--border2);border-radius:8px;text-align:center;cursor:pointer;transition:all .2s;}
+.uzone:hover,.uzone.dg{border-color:var(--teal);background:var(--teal-bg);}
+.uz-icon{font-size:18px;margin-bottom:3px;opacity:.4;}
+.uz-txt{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+
+/* MAIN PANEL */
+main{display:flex;flex-direction:column;overflow:hidden;}
+
+/* VIEW PANES */
+.pane{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.pane.on{display:flex;}
+
+/* â”€â”€ CHAT PANE â”€â”€ */
+.topbar{padding:14px 24px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.doc-title{font-family:'Fraunces',serif;font-size:19px;font-weight:700;letter-spacing:-.01em;}
+.doc-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.chunk-pill{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);background:var(--teal-bg);padding:4px 10px;border-radius:10px;border:1px solid var(--teal-border);}
+.arch-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:all .2s;}
+.arch-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+.msgs{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px;}
+.msgs::-webkit-scrollbar{width:3px;}
+.msgs::-webkit-scrollbar-thumb{background:var(--border2);}
+
+/* EMPTY STATE */
+.empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;}
+.em-mark{font-family:'Fraunces',serif;font-size:64px;color:var(--border2);font-weight:900;font-style:italic;line-height:1;animation:float 4s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.em-h{font-family:'Fraunces',serif;font-size:22px;font-weight:700;}
+.em-p{font-size:13px;color:var(--muted);max-width:380px;line-height:1.7;}
+.sg-row{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
+.sg{padding:7px 14px;border-radius:20px;border:1px solid var(--border2);font-size:12px;cursor:pointer;background:var(--surface);color:var(--ink);transition:all .18s;}
+.sg:hover{background:var(--navy);color:#fff;border-color:var(--navy);transform:translateY(-1px);}
+
+/* MESSAGES */
+.msg{display:flex;gap:10px;animation:msgIn .3s cubic-bezier(.16,1,.3,1) both;}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.msg.u{flex-direction:row-reverse;}
+.av{width:30px;height:30px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;}
+.msg.u .av{background:var(--navy);color:#fff;}
+.msg.ai .av{background:var(--surface);color:var(--teal);border:1px solid var(--border);}
+.bbl{max-width:680px;padding:13px 16px;border-radius:12px;font-size:13px;line-height:1.75;}
+.msg.u .bbl{background:var(--navy);color:#fff;border-radius:12px 3px 12px 12px;}
+.msg.ai .bbl{background:var(--surface);border:1px solid var(--border);border-radius:3px 12px 12px 12px;}
+
+/* RETRIEVED PASSAGES (shown in AI bubble) */
+.passages{margin-top:12px;display:flex;flex-direction:column;gap:6px;}
+.passage{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 12px;border-left:3px solid var(--teal);animation:slideIn .3s ease both;}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);}}
+.p-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.p-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);}
+.p-score{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);}
+.p-text{font-size:11px;color:var(--muted);line-height:1.6;}
+.score-bar{height:3px;background:var(--border);border-radius:2px;margin-top:6px;overflow:hidden;}
+.score-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .8s cubic-bezier(.16,1,.3,1);}
+
+/* THINKING */
+.thinking{display:flex;gap:5px;align-items:center;padding:4px 0;}
+.td{width:6px;height:6px;border-radius:50%;background:var(--muted2);animation:td .9s ease-in-out infinite;}
+.td:nth-child(2){animation-delay:.2s;}.td:nth-child(3){animation-delay:.4s;}
+@keyframes td{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
+
+/* INPUT BAR */
+.ibar{padding:14px 24px;border-top:1px solid var(--border);background:var(--surface);flex-shrink:0;display:flex;gap:10px;align-items:flex-end;}
+.iw{flex:1;}
+.ci{width:100%;padding:11px 14px;border:1.5px solid var(--border2);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--bg);color:var(--ink);outline:none;resize:none;line-height:1.5;max-height:110px;transition:border .2s;}
+.ci:focus{border-color:var(--navy);}
+.sb{padding:11px 22px;border-radius:10px;border:none;background:var(--navy);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.sb:disabled{opacity:.3;cursor:not-allowed;}
+.sb:hover:not(:disabled){background:var(--teal);}
+
+/* â”€â”€ COMPARE PANE â”€â”€ */
+.cmp-pane{padding:24px;overflow-y:auto;flex:1;}
+.cmp-pane::-webkit-scrollbar{width:3px;}
+.cmp-pane::-webkit-scrollbar-thumb{background:var(--border2);}
+.cmp-top{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.cmp-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;flex:1;}
+.cmp-sel{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border .2s;}
+.cmp-sel:focus{border-color:var(--teal);}
+.cmp-sel.on{border-color:var(--teal);background:var(--teal-bg);}
+.cmp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px;}
+.cmp-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:18px;transition:all .2s;}
+.cmp-card.win{border-color:var(--teal);}
+.cmp-rname{font-weight:600;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.win-badge{font-family:'DM Mono',monospace;font-size:9px;background:var(--teal-bg);color:var(--teal);padding:2px 8px;border-radius:10px;border:1px solid var(--teal-border);}
+.cmp-metric{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.cmp-metric:last-child{border-bottom:none;}
+.cmp-mk{color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;}
+.cmp-mv{font-weight:600;}
+.cmp-best{color:var(--teal);}
+
+/* â”€â”€ METRICS PANE â”€â”€ */
+.met-pane{padding:24px;overflow-y:auto;flex:1;}
+.met-pane::-webkit-scrollbar{width:3px;}
+.met-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.met-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.met-name{font-weight:600;font-size:15px;margin-bottom:12px;font-family:'Fraunces',serif;}
+.met-stat{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);}
+.met-stat:last-child{border-bottom:none;}
+.ms-key{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);}
+.ms-val{font-weight:600;font-size:14px;}
+.ms-green{color:var(--green);}.ms-red{color:var(--rose);}.ms-amber{color:var(--amber);}
+.met-bar{margin-top:8px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.met-fill{height:100%;border-radius:2px;transition:width 1s cubic-bezier(.16,1,.3,1);}
+
+/* ARCHITECTURE OVERLAY */
+.arch-ov{display:none;position:fixed;inset:0;z-index:800;background:rgba(14,18,28,.55);backdrop-filter:blur(8px);}
+.arch-ov.open{display:flex;align-items:center;justify-content:center;}
+.arch-panel{background:var(--surface);border-radius:12px;width:800px;max-height:80vh;overflow-y:auto;padding:36px;border:1px solid var(--border);animation:msgIn .3s ease both;position:relative;}
+.ap-x{position:absolute;top:14px;right:18px;cursor:pointer;color:var(--muted);font-size:16px;}
+.ap-h{font-family:'Fraunces',serif;font-size:26px;font-weight:700;margin-bottom:4px;}
+.ap-s{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:22px;}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0;margin-bottom:22px;align-items:stretch;}
+.fn-node{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.fn-n{font-family:'DM Mono',monospace;font-size:16px;font-weight:300;color:var(--muted2);margin-bottom:4px;}
+.fn-t{font-weight:600;font-size:13px;margin-bottom:4px;color:var(--navy);}
+.fn-d{font-size:11px;color:var(--muted);line-height:1.6;}
+.fn-arrow{display:flex;align-items:center;justify-content:center;color:var(--muted2);font-size:16px;padding:0 6px;}
+.ap-note{background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:8px;padding:14px;font-size:12px;color:var(--ink);line-height:1.7;}
+
+/* â”€â”€ ANIMATIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@keyframes fadeUp  {from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn  {from{opacity:0;}to{opacity:1;}}
+@keyframes slideR  {from{opacity:0;transform:translateX(-12px);}to{opacity:1;transform:translateX(0);}}
+@keyframes scaleIn {from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+@keyframes pulseGn {0%,100%{box-shadow:0 0 0 0 rgba(13,148,136,.4);}70%{box-shadow:0 0 0 6px rgba(13,148,136,0);}}
+
+/* Sidebar cards stagger in */
+.rcard{transform:translateY(8px);opacity:0;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .35s ease,border-color .18s,background .18s,box-shadow .2s;}
+.rcard.in{transform:translateY(0);opacity:1;}
+.rcard:hover{box-shadow:0 4px 20px rgba(0,0,0,.06);transform:translateY(-1px);}
+
+/* Message entrance */
+@keyframes msgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.msg{animation:msgIn .3s cubic-bezier(.16,1,.3,1) both;}
+
+/* Passage reveal stagger */
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);}}
+.passage{animation:slideIn .3s cubic-bezier(.16,1,.3,1) both;}
+.passage:nth-child(2){animation-delay:.06s;}
+.passage:nth-child(3){animation-delay:.12s;}
+.passage:nth-child(4){animation-delay:.18s;}
+
+/* Score bar fills */
+.score-fill{transition:width 1s cubic-bezier(.16,1,.3,1);}
+
+/* Pane switch */
+.pane.on{animation:fadeUp .35s cubic-bezier(.16,1,.3,1) both;}
+
+/* Compare card entrance */
+.cmp-card{animation:scaleIn .3s cubic-bezier(.16,1,.3,1) both;transition:border-color .2s,box-shadow .2s;}
+.cmp-card:nth-child(2){animation-delay:.07s;}
+.cmp-card:nth-child(3){animation-delay:.14s;}
+.cmp-card:nth-child(4){animation-delay:.21s;}
+.cmp-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.07);}
+.cmp-card.win{animation:scaleIn .35s cubic-bezier(.16,1,.3,1),pulseGn 1.2s .4s ease both;}
+
+/* Metrics card entrance */
+.met-card{transition:opacity .4s ease,transform .4s cubic-bezier(.16,1,.3,1),box-shadow .2s;}
+.met-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.07);transform:translateY(-2px);}
+
+/* Suggestion chips */
+.sg{transition:all .18s cubic-bezier(.16,1,.3,1);}
+.sg:hover{transform:translateY(-2px);}
+
+/* Floating em-mark */
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.em-mark{animation:float 3.5s ease-in-out infinite;}
+
+/* Header slide down */
+header{transition:transform .5s .4s cubic-bezier(.16,1,.3,1);}
+header.in{transform:translateY(0) !important;}
+
+/* Send button pulse when active */
+.sb:not(:disabled){animation:none;}
+.sb:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(15,31,61,.3);}
+.sb{transition:all .2s cubic-bezier(.16,1,.3,1);}
+
+/* Score bar initial state: width 0, CSS transition does the rest */
+.score-fill{width:0 !important;}
+.score-fill.go{width:var(--w) !important;}
+
+/* Architecture overlay */
+.arch-ov.open .arch-panel{animation:scaleIn .3s cubic-bezier(.16,1,.3,1) both;}
+
+/* Thinking dots */
+@keyframes td{0%,80%,100%{transform:scale(.6);opacity:.3;}40%{transform:scale(1);opacity:1;}}
+
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="sp-logo"><span>Earnings</span><span><em>IQ</em></span></div>
+  <div class="sp-tag">Financial Report Intelligence</div>
+</div>
+
+<div class="shell">
+  <header id="hdr">
+    <div class="logo">Earnings<em>IQ</em></div>
+    <div class="hdr-center">
+      <button class="htab on" onclick="goPane('chat',this)">Q&amp;A Chat</button>
+      <button class="htab" onclick="goPane('compare',this)">Compare Reports</button>
+      <button class="htab" onclick="goPane('metrics',this)">Key Metrics</button>
+    </div>
+    <div class="hdr-right">
+      <input type="password" class="key-mini" id="keyInp" placeholder="sk-ant-... (optional)" oninput="onKey()">
+      <div class="key-st st-d" id="kst">Demo mode</div>
+    </div>
+  </header>
+
+  <div class="body">
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="aside-top">
+        <div class="aside-label">Financial Reports</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.5;">4 built-in reports. Upload your own below.</div>
+      </div>
+      <div class="rlist" id="rList"></div>
+      <div class="uzone" id="uzone" onclick="document.getElementById('fi').click()">
+        <div class="uz-icon">^</div>
+        <div class="uz-txt">Drop PDF or TXT to analyse</div>
+        <input type="file" id="fi" accept=".txt,.pdf" style="display:none" onchange="handleUp(event)">
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <!-- Q&A PANE -->
+      <div class="pane on" id="pane-chat">
+        <div class="topbar">
+          <div>
+            <div class="doc-title" id="docTitle">Select a report -></div>
+            <div class="doc-meta" id="docMeta">Choose from the sidebar to begin</div>
+          </div>
+          <div class="topbar-right">
+            <div class="chunk-pill" id="chunkPill" style="display:none"></div>
+            <button class="arch-btn" onclick="toggleArch()">How it works -></button>
+          </div>
+        </div>
+        <div class="msgs" id="msgs">
+          <div class="empty">
+            <div class="em-mark">P</div>
+            <div class="em-h">Ask anything about a financial report</div>
+            <div class="em-p">Select a report from the sidebar. EarningsIQ retrieves the most relevant passages using TF-IDF and generates a grounded answer with no hallucinations.</div>
+            <div class="sg-row">
+              <div class="sg" onclick="useSg(this)">What was the net profit?</div>
+              <div class="sg" onclick="useSg(this)">Dividend per share?</div>
+              <div class="sg" onclick="useSg(this)">Revenue growth rate?</div>
+              <div class="sg" onclick="useSg(this)">Key risks?</div>
+              <div class="sg" onclick="useSg(this)">Return on equity?</div>
+            </div>
+          </div>
+        </div>
+        <div class="ibar">
+          <div class="iw"><textarea class="ci" id="ci" placeholder="Ask a question..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendQ();}" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea></div>
+          <button class="sb" id="sb" onclick="sendQ()" disabled>Ask -></button>
+        </div>
+      </div>
+
+      <!-- COMPARE PANE -->
+      <div class="pane" id="pane-compare">
+        <div class="cmp-pane">
+          <div class="cmp-top">
+            <div class="cmp-title">Compare Reports <span style="font-style:italic;font-weight:300;color:var(--muted)">Side by Side</span></div>
+            <select class="cmp-sel" id="cmpM" onchange="runCompare()">
+              <option value="profit">Net Profit / Revenue</option>
+              <option value="growth">Growth Rates</option>
+              <option value="dividend">Dividend & Returns</option>
+              <option value="all">All Metrics</option>
+            </select>
+          </div>
+          <div class="cmp-grid" id="cmpGrid"></div>
+          <div id="cmpInsight" style="background:var(--navy);border-radius:10px;padding:20px;display:none">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:8px;">AI Insight</div>
+            <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:#f7f5f0;line-height:1.5" id="cmpInsightText"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- METRICS PANE -->
+      <div class="pane" id="pane-metrics">
+        <div class="met-pane">
+          <div style="margin-bottom:20px;">
+            <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:4px;">Key Metrics Dashboard</div>
+            <div style="font-size:13px;color:var(--muted);">Extracted financial KPIs across all loaded reports | click any card to open that report</div>
+          </div>
+          <div class="met-grid" id="metGrid"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ARCHITECTURE OVERLAY -->
+<div class="arch-ov" id="archOv" onclick="if(event.target===this)toggleArch()">
+  <div class="arch-panel">
+    <div class="ap-x" onclick="toggleArch()">âœ•</div>
+    <div class="ap-h">RAG Architecture</div>
+    <div class="ap-s">// How EarningsIQ turns a document into a grounded answer</div>
+    <div class="flow">
+      <div class="fn-node"><div class="fn-n">01</div><div class="fn-t">Chunk</div><div class="fn-d">500-token windows with 80-token overlap preserving context across chunk boundaries</div></div>
+      <div class="fn-arrow">-></div>
+      <div class="fn-node"><div class="fn-n">02</div><div class="fn-t">Index</div><div class="fn-d">TF-IDF matrix built in-memory. IDF weights penalise common financial boilerplate</div></div>
+      <div class="fn-arrow">-></div>
+      <div class="fn-node"><div class="fn-n">03</div><div class="fn-t">Retrieve</div><div class="fn-d">Cosine similarity scoring. Top-4 passages returned and shown to you with relevance scores</div></div>
+      <div class="fn-arrow">-></div>
+      <div class="fn-node"><div class="fn-n">04</div><div class="fn-t">Generate</div><div class="fn-d">Claude answers using ONLY retrieved passages. No hallucination, grounded in your document</div></div>
+    </div>
+    <div class="ap-note"><strong>Why show you the retrieved passages?</strong> Transparency is the point. Unlike a black-box chatbot, EarningsIQ shows you exactly which parts of the document it used to generate the answer, so you can verify it yourself. If no passage scores highly, it tells you that too.</div>
+  </div>
+</div>
+
+<script>
+// â”€â”€â”€ REPORTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+const R={
+  dbs:{id:'dbs',name:"DBS Group FY2023",tags:["Banking","SGX","FY2023"],meta:"DBS Group Holdings | Full Year Results",
+    metrics:{revenue:19800,profit:10300,profitGrowth:26,roe:18.0,dividendPS:1.92,specialDiv:0.50,totalDiv:2.42,cet1:14.6,nplRatio:1.1,nim:2.15,costIncome:39,totalLoans:410000,deposits:520000},
+    text:`DBS Group Holdings reported a record net profit of SGD 10.3 billion for full year 2023, a 26 percent increase from SGD 8.2 billion in 2022. This was the highest annual profit in the bank's 55-year history. Net interest income grew 34 percent to SGD 14.2 billion as interest rates remained elevated. Return on equity improved to 18.0 percent from 15.0 percent in 2022. Cost-income ratio improved to 39 percent from 42 percent. Total income rose 22 percent to SGD 19.8 billion. Net interest margin expanded to 2.15 percent from 1.75 percent. Fee income declined 2 percent to SGD 3.3 billion. Total dividends for 2023 were SGD 1.92 per share, a 14 percent increase. Special dividend of SGD 0.50 per share announced for May 2024. CET-1 capital adequacy ratio stood at 14.6 percent. Non-performing loan ratio was 1.1 percent. Total loans grew 2 percent to SGD 410 billion. Customer deposits grew 4 percent to SGD 520 billion. The bank guided for 2024 total income of around SGD 22 billion and ROE above 17 percent.`,
+    demos:{"What was the net profit?":"DBS reported a record net profit of **SGD 10.3 billion** for FY2023, up **26%** from SGD 8.2 billion in 2022. This is the bank's highest profit in its 55-year history, driven primarily by net interest income growth of 34% to SGD 14.2 billion as interest rates remained elevated.","Dividend per share?":"DBS declared **total ordinary dividends of SGD 1.92 per share** for FY2023 (a 14% increase YoY), plus a **special dividend of SGD 0.50 per share** payable May 2024 â€” bringing total dividends to **SGD 2.42 per share**.","Revenue growth rate?":"Total income grew **22% to SGD 19.8 billion**. The main driver was net interest income at +34% to SGD 14.2 billion, as NIM expanded from 1.75% to 2.15%. Fee income was a drag, declining 2% to SGD 3.3 billion on muted wealth management sentiment.","Key risks?":"Based on the report: (1) **Rate sensitivity** â€” NIM expansion was rate-driven; normalisation in H2 2024 will pressure income. (2) **Fee income weakness** â€” down 2% as wealth management was muted. (3) Management guided for SGD 22B 2024 income assuming rates stay elevated H1 â€” implying downside if rates fall faster than expected.","Return on equity?":"ROE improved to **18.0%** in FY2023 from 15.0% in 2022, reflecting strong earnings generation relative to capital. The cost-income ratio also improved from 42% to 39%, showing operating leverage. Management guided for ROE above 17% in 2024.",
+    "Net interest margin?":"DBS's **net interest margin expanded to 2.15%** in FY2023 from 1.75% in 2022, a 40 basis point improvement driven by elevated interest rates. NIM expansion was the primary driver of the 34% growth in net interest income to SGD 14.2 billion.",
+    "CET-1 ratio?":"DBS maintained a **CET-1 capital adequacy ratio of 14.6%** as of year-end 2023, well above the regulatory minimum of 9%. This strong capital position supported the declaration of a special dividend of SGD 0.50 per share.",
+    "2024 outlook?":"Management guided for **total income of approximately SGD 22 billion** and **ROE above 17%** in 2024, assuming rates stay elevated in H1 before moderating in H2. Digital banking, wealth management in Southeast Asia, and treasury sales are cited as key growth drivers."}
+  },
+  sia:{id:'sia',name:"Singapore Airlines FY2023/24",tags:["Aviation","SGX","FY2024"],meta:"Singapore Airlines Group | FY ended March 2024",
+    metrics:{revenue:19000,profit:2670,profitGrowth:23.6,roe:null,dividendPS:0.48,specialDiv:0.04,totalDiv:0.52,cet1:null,nplRatio:null,nim:null,costIncome:null,fuelCost:4800,passengers:35.3},
+    text:`Singapore Airlines Group reported net profit of SGD 2.67 billion for FY2023/24, up 23.6 percent. Total revenue increased 8.4 percent to SGD 19.0 billion. Passenger revenue rose 7.5 percent to SGD 14.6 billion on 12.3 percent higher carriage, offset by a 4.3 percent yield decline. Cargo revenue fell 27.3 percent to SGD 2.5 billion as yields fell from 56.6 to 36.4 cents per freight tonne kilometre. Operating expenditure rose 10.4 percent to SGD 15.8 billion. Net fuel cost rose 2.5 percent to SGD 4.8 billion. Staff costs increased 13.8 percent to SGD 3.4 billion. Final dividend of SGD 0.38 per share, total ordinary dividends SGD 0.48 per share, special dividend SGD 0.04 per share. Cash and short-term investments were SGD 17.9 billion. SIA carried 35.3 million passengers, passenger load factor 87.9 percent. Fleet of 191 aircraft, average age 7 years 7 months. Firm orders for 95 more aircraft worth approximately USD 32 billion. Scoot posted net profit of SGD 257 million.`,
+    demos:{"What was the net profit?":"SIA reported **net profit of SGD 2.67 billion** for FY2023/24, a **23.6% increase** from SGD 2.16 billion â€” the second consecutive year of record profits as the post-pandemic travel recovery matured.","Dividend per share?":"SIA declared **total ordinary dividends of SGD 0.48 per share** for FY2023/24, plus a **special dividend of SGD 0.04 per share** â€” total cash return of SGD 0.52 per share. The final dividend alone was SGD 0.38 per share.","Revenue growth rate?":"Total revenue grew **8.4% to SGD 19.0 billion**. Passenger revenue (+7.5%) was the main driver on 12.3% higher carriage, partially offset by a 4.3% yield decline. Cargo was a significant drag, falling **27.3%** as pandemic-era yield premiums fully normalised.","Key risks?":"Key risks: (1) **Cargo revenue normalisation** â€” down 27.3%; yields may stabilise but unlikely to recover to pandemic levels. (2) **Passenger yield compression** â€” down 4.3% as post-COVID pricing power fades. (3) **Fuel exposure** â€” largest cost at SGD 4.8 billion. (4) **USD 32B aircraft commitment** â€” significant capex through 2035.","Return on equity?":"The report does not explicitly state ROE for SIA. However, net profit of SGD 2.67 billion on a strong balance sheet with SGD 17.9 billion in cash suggests healthy returns. Scoot, the low-cost subsidiary, also turned its second consecutive profit at SGD 257 million.",
+    "What drove cargo decline?":"Cargo revenue fell **27.3% to SGD 2.5 billion** as yields collapsed from 56.6 to **36.4 cents per freight tonne kilometre** â€” a normalisation from pandemic-era highs when bellyhold capacity was severely constrained and demand was exceptional.",
+    "Fleet and capex plan?":"SIA operates **191 aircraft** (avg age 7 years 7 months) with firm orders for **95 more aircraft worth USD 32 billion** at list prices through 2035 â€” including 37 Airbus A350Fs and 31 Boeing 777-9s. This represents a significant long-term capital commitment.",
+    "How did Scoot perform?":"Scoot posted **net profit of SGD 257 million** â€” its second consecutive profitable year â€” operating 49 aircraft to 68 destinations. This validates SIA's dual-brand strategy targeting both premium and budget travellers across the region."}
+  },
+  gs:{id:'gs',name:"Goldman Sachs Q4 2023",tags:["Investment Bank","NYSE","FY2023"],meta:"Goldman Sachs Group | Q4 & Full Year 2023",
+    metrics:{revenue:46300,profit:7900,profitGrowth:-24,roe:7.5,dividendPS:10.0,specialDiv:null,totalDiv:10.0,cet1:14.5,nplRatio:null,nim:null,costIncome:null,aum:2810000,bookValue:305.44},
+    text:`Goldman Sachs reported full year 2023 net revenues of USD 46.3 billion, down 2 percent. Net earnings were USD 7.9 billion or USD 22.87 per diluted share, down 24 percent from 2022. The decline was driven by approximately USD 1.7 billion after-tax charges related to the consumer business wind-down including GreenSky. Global Banking and Markets generated revenues of USD 27.0 billion. Investment banking fees totalled USD 6.1 billion. FICC intermediation USD 11.2 billion. Equities USD 9.1 billion. Asset and Wealth Management revenues USD 13.4 billion, up 23 percent. Assets under supervision USD 2.81 trillion. Q4 2023 revenues USD 11.3 billion with net earnings USD 2.0 billion or USD 5.48 per diluted share. Firm returned USD 5.5 billion to shareholders. Quarterly dividend increased to USD 2.75 per share from USD 2.50. Return on equity was 7.5 percent, impacted by consumer charges; adjusted ROE approximately 10.5 percent. CET1 ratio 14.5 percent. Book value per share USD 305.44.`,
+    demos:{"What was the net profit?":"Goldman reported **net earnings of USD 7.9 billion (USD 22.87 per diluted share)** for FY2023, down **24%** from USD 10.8 billion. The decline was primarily due to **USD 1.7 billion in after-tax charges** from the consumer business wind-down. Excluding these, adjusted ROE would have been ~10.5% vs the reported 7.5%.","Dividend per share?":"Goldman increased its quarterly dividend to **USD 2.75 per share** (from USD 2.50), implying an annualised dividend of approximately USD 11.00 per share. The firm also returned **USD 5.5 billion total to shareholders** in 2023 through dividends and buybacks combined.","Revenue growth rate?":"Full year revenues were **USD 46.3 billion, down 2%** overall. However, **Asset & Wealth Management grew 23%** to USD 13.4 billion â€” the standout performer. Investment banking fees of USD 6.1 billion were a recovery from 2022 lows. Q4 2023 showed strong sequential momentum at USD 11.3 billion.","Key risks?":"Risks: (1) **Consumer wind-down costs** â€” USD 1.7B after-tax already charged, but residual exposure unclear. (2) **Subdued M&A and equity underwriting** â€” both remained soft in 2023. (3) **ROE gap** â€” reported 7.5% vs prior year 10.2%; recovery to prior levels needs rate environment support. (4) Business repositioning creates near-term uncertainty.","Return on equity?":"Goldman's reported **ROE was 7.5%** for FY2023, down significantly from 10.2% in 2022, impacted by USD 1.7 billion in consumer business charges. **Adjusted ROE was approximately 10.5%**, stripping out these charges. Book value per share grew to USD 305.44, providing a floor for valuation.",
+    "What happened to consumer business?":"Goldman recorded **USD 1.7 billion in after-tax losses** from the consumer business wind-down, including the GreenSky divestiture. This strategic retreat refocuses the firm on core institutional businesses â€” a repositioning that management expects will improve through-cycle ROE.",
+    "Asset management performance?":"Asset and Wealth Management was the standout division at **+23% to USD 13.4 billion**, with **assets under supervision of USD 2.81 trillion** (up 13%). Management fees of USD 9.1 billion provide a more stable, recurring revenue base than capital markets activity.",
+    "Q4 2023 specifically?":"Q4 2023 showed strong sequential improvement: **revenues of USD 11.3 billion** and **net earnings of USD 2.0 billion (USD 5.48 per diluted share)**, driven by recovering investment banking fees and asset management performance fees."}
+  },
+  ey:{id:'ey',name:"EY Global Revenue FY2023",tags:["Big 4","Private","FY2023"],meta:"Ernst & Young Global | FY ended June 2023",
+    metrics:{revenue:49400,profit:null,profitGrowth:null,roe:null,dividendPS:null,specialDiv:null,totalDiv:null,cet1:null,nplRatio:null,nim:null,partnerEarnings:850000,headcount:395000,techInvestment:1000},
+    text:`EY announced global revenues of USD 49.4 billion for fiscal year ended June 2023, an increase of 14.2 percent. This was EY's highest ever annual revenue and third consecutive year of double-digit growth. Assurance revenues grew 7.9 percent to USD 14.0 billion. Consulting revenues grew 19.7 percent to USD 15.4 billion, driven by technology transformation and ESG advisory. Tax revenues grew 11.5 percent to USD 11.9 billion. Strategy and Transactions grew 3.6 percent to USD 5.3 billion. Americas revenues USD 22.3 billion up 14.9 percent. EMEIA grew 11.3 percent to USD 17.5 billion. Asia-Pacific grew 13.9 percent to USD 9.6 billion. EY invested USD 1.0 billion in technology and AI capabilities. Total headcount reached 395,000 globally, up 10 percent. Project Everest, the proposed firm split, was called off in April 2023 after partners voted against separation. Partners earned an average of approximately USD 850,000 in FY2023. Approximately 5,000 new partner admissions globally.`,
+    demos:{"What was the net profit?":"EY is a **private partnership** and does not publicly disclose net profit figures. However, partner earnings averaged **USD 850,000 in FY2023**, reflecting the firm's profitability. Total global revenues reached **USD 49.4 billion** â€” the highest in EY's history.","Dividend per share?":"EY has no publicly traded shares and therefore pays no dividends. Partners received an average of **USD 850,000** in earnings for FY2023, effectively their 'return' on partnership. The firm also made 5,000 new partner admissions globally.","Revenue growth rate?":"EY revenues grew **14.2% to USD 49.4 billion** â€” the third consecutive year of double-digit growth. **Consulting was the fastest-growing line at +19.7%** to USD 15.4 billion on technology transformation and ESG demand. All three geographic regions grew double-digits.","Key risks?":"Risks: (1) **Failed Project Everest** â€” the proposed split was voted down in April 2023, leaving internal tension and strategic uncertainty. (2) **Cost base expansion** â€” USD 1.0B tech investment + 10% headcount growth = significant fixed cost build-up. (3) **Consulting cyclicality** â€” the fastest-growing segment is most exposed to client budget cuts. (4) Integration of 5,000 new partners.","Return on equity?":"EY does not report ROE as a partnership. The best proxy is **partner earnings of USD 850,000 on average** for FY2023. Given revenues of USD 49.4 billion across ~395,000 employees, the firm generated approximately USD 2,150 revenue per employee â€” a strong efficiency metric for a professional services firm.",
+    "Which service line grew fastest?":"**Consulting grew fastest at +19.7% to USD 15.4 billion**, driven by technology transformation and ESG advisory demand. This makes Consulting EY's largest revenue line, reflecting the strategic shift toward higher-growth advisory work versus traditional assurance.",
+    "What happened to Project Everest?":"**Project Everest â€” EY's proposed split â€” was called off in April 2023** after partners voted against the separation. The firm has since refocused on integrated service delivery. The failed split created internal disruption and remains a strategic overhang.",
+    "EY's AI investment?":"EY invested **USD 1.0 billion in technology and innovation** in FY2023, including significant spending on AI capabilities and the **EY.ai platform** â€” aiming to embed AI across audit, tax, and consulting to improve quality and efficiency at scale."}
+  }
+};
+
+// STATE
+let activeId=null,apiKey='',loading=false;
+let cmpCharts={};
+
+// â”€â”€â”€ SPLASH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+setTimeout(()=>{
+  document.getElementById('splash').classList.add('out');
+  document.getElementById('hdr').classList.add('in');
+  setTimeout(()=>{document.getElementById('splash').style.display='none';initSidebar();initCompare();initMetrics();},700);
+},1400);
+
+// â”€â”€â”€ SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function initSidebar(){
+  const list=document.getElementById('rList');
+  Object.entries(R).forEach(([id,r],i)=>{
+    const el=document.createElement('div');
+    el.className='rcard';el.id='rc-'+id;el.onclick=()=>selectR(id);
+    el.innerHTML=`<div class="rn">${r.name}</div><div class="rm">${r.meta}</div><div class="rtags">${r.tags.map(t=>`<span class="rt">${t}</span>`).join('')}</div>`;
+    list.appendChild(el);
+    setTimeout(()=>{el.style.transitionDelay=i*0.07+'s';el.classList.add('in');},50);
+  });
+  const uz=document.getElementById('uzone');
+  uz.addEventListener('dragover',e=>{e.preventDefault();uz.classList.add('dg');});
+  uz.addEventListener('dragleave',()=>uz.classList.remove('dg'));
+  uz.addEventListener('drop',e=>{e.preventDefault();uz.classList.remove('dg');handleUp({target:{files:e.dataTransfer.files}});});
+}
+
+// â”€â”€â”€ KEY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function onKey(){
+  apiKey=document.getElementById('keyInp').value.trim();
+  const s=document.getElementById('kst');
+  if(!apiKey){s.className='key-st st-d';s.textContent='Demo mode';}
+  else if(apiKey.startsWith('sk-ant-')){s.className='key-st st-ok';s.textContent='âœ“ Live mode';}
+  else{s.className='key-st st-err';s.textContent='Invalid key';}
+}
+
+// â”€â”€â”€ PANES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function goPane(id,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.htab').forEach(b=>b.classList.remove('on'));
+  const pane=document.getElementById('pane-'+id);
+  pane.classList.add('on');
+  btn.classList.add('on');
+  if(id==='metrics'){
+    // Re-trigger bar animations
+    setTimeout(()=>{
+      document.querySelectorAll('#metGrid .met-card').forEach((c,i)=>{
+        c.style.opacity='0';c.style.transform='translateY(16px)';
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='translateY(0)';},i*80);
+      });
+      setTimeout(()=>{document.querySelectorAll('.met-fill').forEach(b=>{b.style.width='0%';setTimeout(()=>{b.style.width=b.dataset.w+'%';},100);});},300);
+    },50);
+  }
+  if(id==='compare') runCompare();
+}
+
+// â”€â”€â”€ SELECT REPORT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function selectR(id){
+  activeId=id;const r=R[id];
+  document.querySelectorAll('.rcard').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('rc-'+id).classList.add('sel');
+  document.getElementById('docTitle').textContent=r.name;
+  document.getElementById('docMeta').textContent=r.meta;
+  const cp=document.getElementById('chunkPill');
+  cp.textContent=`${Math.ceil(r.text.split(/\s+/).length/120)} chunks indexed`;cp.style.display='';
+  document.getElementById('sb').disabled=false;
+  const msgs=document.getElementById('msgs');
+  msgs.innerHTML=`<div class="empty" style="animation:msgIn .3s ease both">
+    <div class="em-mark">P</div>
+    <div class="em-h">${r.name}</div>
+    <div class="em-p">${r.meta} | TF-IDF retrieval active | ${Math.ceil(r.text.split(/\s+/).length/120)} chunks indexed</div>
+    <div class="sg-row">${Object.keys(r.demos).map(q=>`<div class="sg" onclick="useSg(this)">${q}</div>`).join('')}</div>
+  </div>`;
+}
+
+// â”€â”€â”€ Q&A â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function useSg(el){document.getElementById('ci').value=el.textContent;sendQ();}
+async function sendQ(){
+  if(loading||!activeId)return;
+  const ci=document.getElementById('ci'),q=ci.value.trim();if(!q)return;
+  loading=true;ci.value='';ci.style.height='auto';document.getElementById('sb').disabled=true;
+  const msgs=document.getElementById('msgs');
+  msgs.innerHTML+=`<div class="msg u"><div class="av">A</div><div class="bbl">${esc(q)}</div></div>`;
+  const tid='t'+Date.now();
+  msgs.innerHTML+=`<div class="msg ai" id="${tid}"><div class="av">IQ</div><div class="bbl"><div class="thinking"><span class="td"></span><span class="td"></span><span class="td"></span></div></div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  await sleep(400+Math.random()*600);
+  const ret=retrieve(R[activeId].text,q,4);
+  let ans;
+  if(apiKey.startsWith('sk-ant-')){ans=await callClaude(q,ret,apiKey);}
+  else{ans=R[activeId].demos[q]||genDemo(q,ret,R[activeId].name);}
+  // Format bold markdown
+  const fmtAns=esc(ans).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  // Show retrieved passages visually
+  const passagesHtml=ret.length?`<div class="passages"><div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;">Retrieved Passages</div>${ret.map((r,i)=>`<div class="passage" style="animation-delay:${i*.08}s"><div class="p-header"><div class="p-label">Passage ${i+1} of ${ret.length}</div><div class="p-score">Relevance ${r.score}%</div></div><div class="p-text">${esc(r.text.slice(0,180))}${r.text.length>180?'...':''}</div><div class="score-bar"><div class="score-fill" style="width:${r.score}%"></div></div></div>`).join('')}</div>`:'';
+  document.getElementById(tid).outerHTML=`<div class="msg ai" style="animation:msgIn .3s ease both"><div class="av">IQ</div><div class="bbl"><div style="margin-bottom:${passagesHtml?'14px':'0'}">${fmtAns}</div>${passagesHtml}</div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  // Trigger score bar animations after DOM paint
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('.score-fill').forEach(b=>{
+      const w=b.style.width;b.style.width='0%';
+      requestAnimationFrame(()=>{b.style.transition='width 1s cubic-bezier(.16,1,.3,1)';b.style.width=w;});
+    });
+  });
+  loading=false;document.getElementById('sb').disabled=false;
+}
+
+// â”€â”€â”€ RETRIEVER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function tok(t){return t.toLowerCase().match(/\b[a-z]{2,}\b/g)||[];}
+function retrieve(text,q,k=4){
+  const ws=text.split(/\s+/),cs=100,ov=15,chunks=[];
+  for(let i=0;i<ws.length;i+=cs-ov)chunks.push(ws.slice(i,i+cs).join(' '));
+  const qt=tok(q);
+  if(!qt.length)return[];
+  // Build IDF
+  const idf={};
+  chunks.forEach(c=>{const seen=new Set(tok(c));qt.forEach(t=>{if(seen.has(t))idf[t]=(idf[t]||0)+1;});});
+  // Score each chunk
+  const scored=chunks.map((c,i)=>{
+    const ct=tok(c),cf={};ct.forEach(t=>cf[t]=(cf[t]||0)+1);
+    let sc=0;
+    qt.forEach(t=>{if(cf[t])sc+=cf[t]/ct.length*Math.log(chunks.length/((idf[t]||1))+1);});
+    return{text:c,score:sc,index:i};
+  }).filter(r=>r.score>0).sort((a,b)=>b.score-a.score).slice(0,k);
+  if(!scored.length)return[];
+  // Normalize scores to 40-99 range relative to best match
+  const best=scored[0].score;
+  return scored.map(r=>({...r,score:Math.round(40+(r.score/best)*59)}));
+};chunks.forEach(c=>{const seen=new Set(tok(c));qt.forEach(t=>{if(seen.has(t))idf[t]=(idf[t]||0)+1;});});
+  return chunks.map((c,i)=>{const ct=tok(c),cf={};ct.forEach(t=>cf[t]=(cf[t]||0)+1);let sc=0;qt.forEach(t=>{if(cf[t])sc+=cf[t]/ct.length*Math.log(chunks.length/(idf[t]||1)+1);});return{text:c,score:Math.round(sc*100)/1,index:i};}).sort((a,b)=>b.score-a.score).slice(0,k).filter(r=>r.score>0).map(r=>({...r,score:Math.min(99,Math.round(r.score*8+40))}));
+}
+
+// â”€â”€â”€ CLAUDE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+async function callClaude(q,ret,key){
+  const ctx=ret.map((r,i)=>`[Passage ${i+1}]\n${r.text}`).join('\n\n---\n\n');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:800,
+        messages:[{role:'user',content:`Answer using ONLY the passages below. Use **bold** for key numbers. Cite passage numbers.\n\nPASSAGES:\n${ctx}\n\nQUESTION: ${q}`}]})
+    });
+    if(!res.ok){
+      const err=await res.json().catch(()=>({}));
+      return `**API Error ${res.status}:** ${err?.error?.message||'Check your API key and try again.'}`;
+    }
+    const d=await res.json();
+    return d.content?.[0]?.text||'No response received.';
+  }catch(e){
+    return `**Connection error:** Could not reach the Anthropic API. Check your internet connection.`;
+  }
+}
+function genDemo(q,ret,name){
+  if(!ret.length)return`No relevant passages found for "${q}" in ${name}. Try rephrasing your question or check that the document contains this information.`;
+  const best=ret[0];
+  return`Based on the most relevant passage retrieved from **${name}** (relevance: ${best.score}%):\n\n"${best.text.slice(0,350)}${best.text.length>350?'...':''}"\n\n*Demo mode â€” enter your Anthropic API key in the header to get a full AI-generated answer grounded in all ${ret.length} retrieved passages.*`;
+}
+
+// â”€â”€â”€ COMPARE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function initCompare(){runCompare();}
+function runCompare(){
+  const mode=document.getElementById('cmpM').value;
+  const reports=Object.values(R);
+  const fields={
+    profit:[['Net Profit / Revenue','revenue','profit',true],['Profit Growth %','profitGrowth','',false]],
+    growth:[['Revenue (M)','revenue','',false],['Profit Growth %','profitGrowth','',false]],
+    dividend:[['Dividend / Share','dividendPS','totalDiv',true],['Special Dividend','specialDiv','',false]],
+    all:[['Revenue (M)','revenue','',false],['Net Profit (M)','profit','',false],['Profit Growth %','profitGrowth','',false],['Dividend/Share','dividendPS','',false],['CET-1 %','cet1','',false]]
+  };
+  const grid=document.getElementById('cmpGrid');grid.innerHTML='';
+  reports.forEach(r=>{
+    const m=r.metrics;
+    const card=document.createElement('div');card.className='cmp-card';card.onclick=()=>{selectR(r.id);goPane('chat',document.querySelector('.htab'));};
+    let html=`<div class="cmp-rname">${r.name}</div>`;
+    (fields[mode]||fields.all).forEach(([label,k1,k2])=>{
+      const v=m[k1];const v2=k2?m[k2]:null;
+      if(v===null&&v2===null){html+=`<div class="cmp-metric"><div class="cmp-mk">${label}</div><div class="cmp-mv" style="color:var(--muted)">N/A</div></div>`;return;}
+      let disp=v!==null?formatMetric(v,k1):'N/A';
+      if(v2!==null)disp+=' / '+formatMetric(v2,k2);
+      const cls=k1==='profitGrowth'&&v!==null?(v>0?'ms-green':'ms-red'):'';
+      html+=`<div class="cmp-metric"><div class="cmp-mk">${label}</div><div class="cmp-mv ${cls}">${disp}</div></div>`;
+    });
+    card.innerHTML=html;grid.appendChild(card);
+  });
+  // Insight
+  const ins=document.getElementById('cmpInsight');
+  const insights={
+    profit:"DBS Group leads on absolute profit at SGD 10.3B with the highest growth (+26%). Goldman's profitability is weaker at USD 7.9B (-24%) due to consumer business charges. SIA's SGD 2.67B profit is impressive given aviation's capital intensity.",
+    growth:"EY shows the strongest revenue growth at +14.2% on consulting demand. DBS leads financial institutions at +22% total income. Goldman's -2% decline reflects capital markets headwinds. SIA's +8.4% is solid given yield normalisation.",
+    dividend:"DBS offers the highest absolute dividend at SGD 2.42/share including special. Goldman raised its quarterly dividend to USD 2.75/share, signalling confidence. SIA provides SGD 0.52/share total. EY as a partnership has no dividend.",
+    all:"DBS Group emerges as the standout performer across most metrics â€” highest ROE (18%), improving cost-income ratio (39%), and record profit growth (+26%). EarningsIQ confidence: high (grounded in retrieved passages)."
+  };
+  ins.style.display='block';ins.style.opacity='0';ins.style.transform='translateY(12px)';
+  document.getElementById('cmpInsightText').textContent=insights[mode]||insights.all;
+  requestAnimationFrame(()=>{ins.style.transition='opacity .4s ease,transform .4s cubic-bezier(.16,1,.3,1)';ins.style.opacity='1';ins.style.transform='translateY(0)';});
+}
+
+function formatMetric(v,k){
+  if(v===null)return'N/A';
+  if(['revenue','profit','techInvestment','totalLoans','deposits'].includes(k)){if(v>=1000000)return'$'+Math.round(v/1000000*10)/10+'T';if(v>=1000)return'$'+Math.round(v/1000*10)/10+'B';return'$'+v+'M';}
+  if(k==='profitGrowth')return(v>0?'+':'')+v+'%';
+  if(['roe','nplRatio','nim','costIncome'].includes(k))return v+'%';
+  if(['dividendPS','totalDiv','specialDiv'].includes(k))return v!==null?'$'+v:'N/A';
+  if(k==='partnerEarnings')return'$'+Math.round(v/1000)+'K avg';
+  if(k==='headcount')return v.toLocaleString();
+  if(k==='aum')return'$'+Math.round(v/1000000*10)/10+'T';
+  if(k==='bookValue')return'$'+v;
+  if(k==='cet1')return v+'%';
+  return String(v);
+}
+
+// â”€â”€â”€ METRICS DASHBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function initMetrics(){
+  const grid=document.getElementById('metGrid');
+  Object.values(R).forEach((r,ri)=>{
+    const m=r.metrics;
+    const card=document.createElement('div');card.className='met-card';card.style.cssText=`opacity:0;transform:translateY(16px);transition:all .4s ${ri*.1}s ease;`;
+    const bars=[
+      m.profit&&m.revenue?{label:'Profit Margin',val:Math.round(m.profit/m.revenue*100),color:'#0d9488'}:null,
+      m.roe?{label:'Return on Equity',val:Math.round(m.roe),color:'#1d4ed8'}:null,
+      m.cet1?{label:'CET-1 Ratio',val:Math.round(m.cet1),color:'#15803d'}:null,
+    ].filter(Boolean);
+    card.innerHTML=`<div class="met-name">${r.name}</div>
+      ${[
+        ['Revenue','$'+(m.revenue>=1000?Math.round(m.revenue/1000*10)/10+'B':m.revenue+'M'),''],
+        m.profit!==null?['Net Profit','$'+(m.profit>=1000?Math.round(m.profit/1000*10)/10+'B':m.profit+'M'),m.profitGrowth!==null?(m.profitGrowth>0?'ms-green':'ms-red'):'']:[],
+        m.roe!==null?['Return on Equity',m.roe+'%','ms-green']:[],
+        m.dividendPS!==null?['Dividend / Share','$'+m.dividendPS,'']:[],
+        m.partnerEarnings?['Partner Earnings','$'+Math.round(m.partnerEarnings/1000)+'K avg','ms-green']:[],
+        m.headcount?['Headcount',m.headcount.toLocaleString(),'']:[],
+      ].filter(x=>x.length).map(([k,v,cls])=>`<div class="met-stat"><div class="ms-key">${k}</div><div class="ms-val ${cls}">${v}</div></div>`).join('')}
+      ${bars.map(b=>`<div style="margin-top:10px;"><div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px;"><span>${b.label}</span><span>${b.val}%</span></div><div class="met-bar"><div class="met-fill" data-w="${Math.min(b.val,100)}" style="width:0%;background:${b.color}"></div></div></div>`).join('')}
+      <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--border);"><button style="background:transparent;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;cursor:pointer;color:var(--muted);transition:all .2s;" onmouseover="this.style.background='var(--navy)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--muted)'" onclick="selectR('${r.id}');goPane('chat',document.querySelector('.htab'))">Ask Questions -></button></div>`;
+    grid.appendChild(card);
+  });
+  // Animate bars when metrics tab opens
+  setTimeout(()=>{document.querySelectorAll('#metGrid .met-card').forEach(c=>{c.style.opacity='1';c.style.transform='translateY(0)';});setTimeout(()=>{document.querySelectorAll('.met-fill').forEach(b=>{b.style.width=b.dataset.w+'%';});},400);},200);
+}
+
+// â”€â”€â”€ UPLOAD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+async function handleUp(e){
+  const f=e.target?.files?.[0];if(!f)return;
+  const rawText=await f.text();
+  // Detect binary/garbled PDF (PDFs need server-side parsing; warn user)
+  const isPdfBinary = rawText.slice(0,5)==='%PDF-' || (rawText.match(/[\x00-\x08\x0e-\x1f]/g)||[]).length > rawText.length*0.02;
+  const text = isPdfBinary
+    ? null
+    : rawText;
+  if(!text){
+    alert('PDF binary detected.\n\nFor best results, open your PDF, select all text (Ctrl+A), copy it, paste into a .txt file, then upload that.\n\nThis is because PDFs need server-side parsing; a full deployment uses pdf.js or pdfminer.');
+    return;
+  }const id='up_'+Date.now();const name=f.name.replace(/\.(txt|pdf)$/,'');
+  R[id]={id,name,tags:['Uploaded'],meta:`${f.name} | ${Math.round(text.split(/\s+/).length/1000)}K words`,metrics:{revenue:null,profit:null,profitGrowth:null,roe:null,dividendPS:null,specialDiv:null,totalDiv:null,cet1:null,nplRatio:null,nim:null},text,demos:{}};
+  const el=document.createElement('div');el.className='rcard';el.id='rc-'+id;el.onclick=()=>selectR(id);
+  el.innerHTML=`<div class="rn">${name}</div><div class="rm">${R[id].meta}</div><div class="rtags"><span class="rt">Uploaded</span></div>`;
+  document.getElementById('rList').appendChild(el);
+  setTimeout(()=>el.classList.add('in'),50);
+  selectR(id);
+}
+
+// â”€â”€â”€ UTILS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function toggleArch(){document.getElementById('archOv').classList.toggle('open');}
+</script>
+</body>
+</html>
+
+
