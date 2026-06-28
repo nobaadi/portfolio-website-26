@@ -320,7 +320,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://fraud-detection-jade.vercel.app/" target="_blank" class="pc-live">View Live -></a>
+          <a href="https://fraud-detection-jade.vercel.app/" target="_blank" class="pc-live" title="Backend on Render free tier — may take ~30s to wake on first load">View Live -></a>
           <a href="https://github.com/nobaadi/fraud-detection" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub -></a>
           <span class="pc-hint">hover |</span>
         </div>
@@ -337,7 +337,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-stat"><div class="pc-val" id="sv1">N/A</div><div class="pc-lbl">price data points tracked</div></div>
           <div class="pc-hover">
             <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Implemented data ingestion and normalization around SingStat sources, then built chart-driven UI flows to compare official inflation against user-defined consumption baskets. Prioritized clean API integration and a frontend that stays fast as data volume grows.</div></div>
-            <div class="ph-techs"><span class="ph-tech">React</span><span class="ph-tech">Chart.js</span><span class="ph-tech">SingStat API</span><span class="ph-tech">Python</span><span class="ph-tech">Node.js</span><span class="ph-tech">Vercel</span></div>
+            <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span><span class="ph-tech">APScheduler</span><span class="ph-tech">React</span><span class="ph-tech">SingStat API</span></div>
           </div>
         </div>
         <div class="pc-footer">
@@ -357,13 +357,12 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas id="ch2"></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv2">N/A</div><div class="pc-lbl">avg cache hit rate</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">Cache Memory Simulator</div><div class="ph-body">Designed a TypeScript simulation engine and Canvas renderer for cache traces, including multiple replacement strategies and real-time hit/miss analytics. Emphasized correctness, deterministic state updates, and debuggable step execution for teaching use.</div></div>
-            <div class="ph-techs"><span class="ph-tech">React</span><span class="ph-tech">TypeScript</span><span class="ph-tech">Canvas API</span><span class="ph-tech">Next.js</span><span class="ph-tech">Tailwind</span><span class="ph-tech">Vercel</span></div>
+            <div><div class="ph-title">Cache Memory Simulator</div><div class="ph-body">Built a correct set-associative cache simulation engine in Python (address bit decomposition, LRU/FIFO/Random replacement, write-back/write-through policies, 3-level AMAT). React frontend runs traces, sweeps cache sizes, and shows a counterfactual: "doubling L2 would reduce avg cycles by X%".</div></div>
+            <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">SQLite</span><span class="ph-tech">React</span><span class="ph-tech">TypeScript</span><span class="ph-tech">Docker</span></div>
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://cachesimulator-mb5mydoky-nobaadis-projects.vercel.app/simulator" target="_blank" class="pc-live">View Live -></a>
-          <a href="https://github.com/nobaadi/cachesimulator-sg" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub -></a>
+          <a href="https://github.com/nobaadi/cachesimulator-sg" target="_blank" class="pc-live">GitHub -></a>
           <span class="pc-hint">hover |</span>
         </div>
       </div>
