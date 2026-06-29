@@ -78,7 +78,7 @@ h1.name em{font-style:italic;color:var(--accent);}
 hr.div{border:none;border-top:1px solid var(--border);margin:0 64px;}
 
 /* â”€â”€ PROJECTS â”€â”€ */
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
 .proj-card{background:rgba(255,255,255,.8);border:1px solid var(--border);border-radius:10px;overflow:hidden;position:relative;transition:box-shadow .3s,transform .3s,border-color .3s;}
 .proj-card:hover{box-shadow:0 14px 48px rgba(0,0,0,.1);transform:translateY(-4px);border-color:rgba(44,82,130,.35);}
 .pc-head{padding:22px 22px 0;}
@@ -211,7 +211,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
   <div class="hero-inner">
     <p class="hero-eyebrow">Y3 Computer Science | SUTD | Singapore</p>
     <h1 class="name">Aadi<br><em>Kaul.</em></h1>
-    <p class="hero-tagline">Software engineer focused on building <em>reliable AI and data products end-to-end</em>, from data pipelines and APIs to production-ready interfaces that help teams make better decisions.</p>
+    <p class="hero-tagline">I build <em>data pipelines, ML systems, and full-stack APIs</em> on real Singapore datasets. From ingestion and modelling to deployed, working interfaces.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-fill">View projects</a>
       <a href="#contact" class="btn">Let's connect!</a>
@@ -254,7 +254,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
             <div class="ft-file"><div class="ft-file-bar" style="background:#2c5282"></div>Pandas / NumPy</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#2c5282"></div>scikit-learn</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#2c5282"></div>Random Forest</div>
-            <div class="ft-file"><div class="ft-file-bar" style="background:#2c5282"></div>PyTorch</div>
+            <div class="ft-file"><div class="ft-file-bar" style="background:#2c5282"></div>SHAP</div>
           </div>
         </div>
         <div class="ft-folder closed" id="ftf1">
@@ -264,7 +264,6 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="ft-files">
             <div class="ft-file"><div class="ft-file-bar" style="background:#553c9a"></div>React</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#553c9a"></div>TypeScript</div>
-            <div class="ft-file"><div class="ft-file-bar" style="background:#553c9a"></div>Next.js</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#553c9a"></div>FastAPI</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#553c9a"></div>Node.js</div>
           </div>
@@ -274,10 +273,10 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
             <span class="ft-chevron">v</span><span class="ft-folder-icon">📁</span><span class="ft-folder-name">AI &amp; LLMs</span>
           </div>
           <div class="ft-files">
-            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>HuggingFace</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>LLMs / RAG</div>
+            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>TF-IDF / Retrieval</div>
+            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>Claude API</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>Prompt Engineering</div>
-            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>Applied AI</div>
           </div>
         </div>
         <div class="ft-folder closed" id="ftf3">
@@ -313,9 +312,9 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
             <div class="pc-desc">Merchants often discover fraud after chargebacks. FraudIQ scores transactions in real time and exposes actionable decline/review decisions through a production-style web workflow.</div>
           </div>
           <div class="pc-chart"><canvas id="ch0"></canvas></div>
-          <div class="pc-stat"><div class="pc-val" id="sv0">N/A</div><div class="pc-lbl">detection accuracy</div></div>
+          <div class="pc-stat"><div class="pc-val" id="sv0">N/A</div><div class="pc-lbl">ROC-AUC score</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">FraudIQ: Fraud Intelligence Platform</div><div class="ph-body">Built an end-to-end fraud detection stack using engineered velocity, geo, and behavior features, model scoring, and a React + FastAPI decision UI. Focused on low-latency predictions, clear operator actions, and architecture that can scale to higher transaction throughput.</div></div>
+            <div><div class="ph-title">FraudIQ: Fraud Intelligence Platform</div><div class="ph-body">Engineered 6 fraud features (velocity, geo-deviation, device novelty, amount z-score) from the IEEE-CIS dataset (590k transactions, 3.5% fraud rate). Ensemble of Isolation Forest + Logistic Regression + Random Forest achieves ROC-AUC 0.97. SHAP values explain per-transaction risk contribution. Full-stack: React + TypeScript + FastAPI + PostgreSQL. Live on Vercel and Render.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">scikit-learn</span><span class="ph-tech">SHAP</span><span class="ph-tech">React</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span></div>
           </div>
         </div>
@@ -336,7 +335,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas id="ch1"></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv1">N/A</div><div class="pc-lbl">price data points tracked</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Implemented data ingestion and normalization around SingStat sources, then built chart-driven UI flows to compare official inflation against user-defined consumption baskets. Prioritized clean API integration and a frontend that stays fast as data volume grows.</div></div>
+            <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Async ETL pipeline pulling CPI data from SingStat TableBuilder API (M214011). Upserts revised figures without creating duplicates. APScheduler runs background refresh on a configurable interval. Includes z-score anomaly detection endpoint that flags categories where latest inflation is 2+ standard deviations above historical mean. React + TypeScript frontend with personal spending weights.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span><span class="ph-tech">APScheduler</span><span class="ph-tech">React</span><span class="ph-tech">SingStat API</span></div>
           </div>
         </div>
@@ -350,19 +349,39 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
       <div class="proj-card">
         <div class="pc-body">
           <div class="pc-head">
-            <div class="pc-kind">Systems | CS Education | Tools</div>
-            <div class="pc-title">Cache Memory Simulator</div>
-            <div class="pc-desc">Cache concepts are hard to internalize without interaction. This simulator executes traces step-by-step with visual state transitions and replacement-policy comparisons.</div>
+            <div class="pc-kind">Data | Analytics | SG</div>
+            <div class="pc-title">HDB Resale Intelligence</div>
+            <div class="pc-desc">Public housing prices in Singapore vary significantly by town, storey, and flat type, but the raw transaction data is hard to explore. This platform ingests real resale records from data.gov.sg and makes them queryable through a live dashboard.</div>
           </div>
-          <div class="pc-chart"><canvas id="ch2"></canvas></div>
-          <div class="pc-stat"><div class="pc-val" id="sv2">N/A</div><div class="pc-lbl">avg cache hit rate</div></div>
+          <div class="pc-chart"><canvas></canvas></div>
+          <div class="pc-stat"><div class="pc-val" id="sv3">N/A</div><div class="pc-lbl">resale price index</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">Cache Memory Simulator</div><div class="ph-body">Built a correct set-associative cache simulation engine in Python (address bit decomposition, LRU/FIFO/Random replacement, write-back/write-through policies, 3-level AMAT). React frontend runs traces, sweeps cache sizes, and shows a counterfactual: "doubling L2 would reduce avg cycles by X%".</div></div>
-            <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">SQLite</span><span class="ph-tech">React</span><span class="ph-tech">TypeScript</span><span class="ph-tech">Docker</span></div>
+            <div><div class="ph-title">HDB Resale Intelligence</div><div class="ph-body">Paginated ETL from data.gov.sg API (resource d_8b84c4ee58e3cfc0ece0d773c8ca6abc) with graceful offline fallback. All filter parameters use SQLAlchemy named bindings -- no f-string SQL injection. SQL layer includes 7 window function queries: LAG MoM delta, RANK/DENSE_RANK/NTILE town ranking, rolling 3-month average with ROWS BETWEEN, storey premium via FIRST_VALUE, YoY change with CTE chain. Chart.js dashboard, 4 tabs, no build step.</div></div>
+            <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">SQLite</span><span class="ph-tech">data.gov.sg</span><span class="ph-tech">Chart.js</span><span class="ph-tech">Docker</span></div>
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://github.com/nobaadi/cachesimulator-sg" target="_blank" class="pc-live">GitHub -></a>
+          <a href="https://github.com/nobaadi/hdb-intelligence" target="_blank" class="pc-live">GitHub -></a>
+          <span class="pc-hint">hover |</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="pc-body">
+          <div class="pc-head">
+            <div class="pc-kind">LLMs | RAG | FinTech</div>
+            <div class="pc-title">EarningsIQ: Financial Report Q&A</div>
+            <div class="pc-desc">Annual reports answer specific questions badly. EarningsIQ chunks a financial document into overlapping text windows, builds a TF-IDF index in memory, and retrieves the most relevant passages before sending them to Claude as grounded context.</div>
+          </div>
+          <div class="pc-chart"><canvas></canvas></div>
+          <div class="pc-stat"><div class="pc-val" id="sv4">N/A</div><div class="pc-lbl">reports indexed</div></div>
+          <div class="pc-hover">
+            <div><div class="ph-title">EarningsIQ: Financial Report Q&A</div><div class="ph-body">Implemented a 4-step RAG pipeline: chunk (500-word overlapping windows), index (TF-IDF term matrix, no vector DB), retrieve (cosine similarity scoring, top-k passages returned with relevance scores), generate (Claude Haiku with retrieved context as prompt). Ships with DBS Group 2023 and Singapore Airlines FY22/23 annual report excerpts as demo documents.</div></div>
+            <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">TF-IDF</span><span class="ph-tech">Claude API</span><span class="ph-tech">Docker</span></div>
+          </div>
+        </div>
+        <div class="pc-footer">
+          <a href="https://github.com/nobaadi/earningsiq" target="_blank" class="pc-live">GitHub -></a>
           <span class="pc-hint">hover |</span>
         </div>
       </div>
@@ -380,9 +399,9 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
     <div class="skills-layout">
       <div class="skills-copy">
         <div class="sec-title" style="margin-bottom:20px;">My <em>skills</em></div>
-        <p>I work across the <strong>full product stack</strong>, from raw data pipelines and ML models on one end to REST APIs and interactive frontends on the other. I care as much about how something feels to use as how it works under the hood.</p>
-        <p>I care about <strong>engineering quality</strong>: maintainable code, clear interfaces, measurable performance, and shipping features that are easy for teammates to extend.</p>
-        <p>Currently most interested in: <strong>backend systems, applied AI, FinTech infrastructure</strong>, and <strong>developer tooling</strong>.</p>
+        <p>I work from <strong>raw data ingestion to deployed interfaces</strong>: ETL pipelines pulling from live government APIs, ML ensembles with explainability, RAG systems with retrieval scoring, and React frontends that call real backends.</p>
+        <p>I care about correctness: <strong>parameterized queries, typed interfaces, async-native backends</strong>, and metrics you can actually explain to an interviewer.</p>
+        <p>Currently targeting: <strong>data engineering, ML engineering, and full-stack SWE</strong> roles in Singapore.</p>
         <div class="skills-hint">drag the nodes | they're force-directed</div>
       </div>
       <canvas id="force-canvas"></canvas>
@@ -396,11 +415,11 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
 <div class="sec" id="contact">
   <div class="glass-card contact-wrap reveal">
     <div class="sec-eyebrow">04 / contact</div>
-    <div class="contact-big">Open to <em>software engineering</em><br>internships and roles.</div>
-    <div class="contact-body">I'm looking for software engineering opportunities where I can contribute across <strong>backend, data, and AI-enabled product development</strong>. I enjoy shipping features, improving system reliability, and collaborating closely with product and design to deliver useful software.<br><br>If your team is hiring for SWE or full-stack developer roles, I'd love to connect.</div>
+    <div class="contact-big">Open to internships in <em>data engineering,<br>ML engineering, and SWE</em>.</div>
+    <div class="contact-body">I'm looking for internship opportunities in <strong>data engineering, ML engineering, data analytics, and software engineering</strong>. I enjoy working across the full stack: designing pipelines, building models, writing APIs, and shipping working interfaces on real data.<br><br>If your team is building with data or AI in Singapore, I'd like to connect.</div>
     <div class="contact-row">
       <div class="contact-links">
-        <a href="mailto:aadikaul@outlook.com" class="c-link">Email -></a>
+        <a href="mailto:aadikaul@gmail.com" class="c-link">Email -></a>
         <a href="https://www.linkedin.com/in/aadi-kaul" target="_blank" class="c-link">LinkedIn -></a>
         <a href="Aadi_Kaul_Resume_2026.pdf" target="_blank" class="c-link">Resume -></a>
       </div>
@@ -459,14 +478,14 @@ window.scrollTo(0,0);
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 (function(){
   const topics=[
-    'why do 88% of SG SMEs still make decisions without data?',
-    'the best moat is a product people can\'t explain but can\'t stop using',
-    'distribution beats product in the first 18 months',
-    'data without a decision attached to it is just trivia',
-    'what problem would I solve if I had 10x the resources?',
-    'unit economics matter more than growth rate in year one',
-    'the gap between insight and action is where value lives',
-    'good founders ask why, great founders ask who loses if this doesn\'t exist',
+    'why columnar formats outperform row-oriented storage on analytical queries',
+    'when TF-IDF is the right retrieval choice and when embeddings actually win',
+    'how L3 cache size determines whether an embedding lookup is a throughput bottleneck',
+    'what the ROC-AUC tells you that accuracy never can on an imbalanced dataset',
+    'why async SQLAlchemy matters when your ETL is waiting on an external API',
+    'the difference between a data pipeline and a script that runs on a schedule',
+    'when SQL window functions replace what used to be a join plus a subquery',
+    'why parameterized queries are non-negotiable even when the input looks safe',
   ];
   const el=document.getElementById('hero-ticker-text');
   function setAll(t){if(el)el.textContent=t;}
@@ -492,11 +511,10 @@ window.scrollTo(0,0);
    Animate on scroll-in, count up stat
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 const chartDefs=[
-  {data:[55,62,68,74,79,84,88,91,93,94],color:'#2c5282',target:94,suffix:'%',id:'sv0'},
+  {data:[55,62,68,74,81,86,91,94,96,97],color:'#2c5282',target:97,suffix:'%',id:'sv0'},
   {data:[20,45,72,95,120,145,163,179,191,200],color:'#276749',target:200,suffix:'+ prices',id:'sv1'},
-  {data:[42,54,63,70,76,81,84,86,87,87],color:'#744210',target:87,suffix:'% hit rate',id:'sv2'},
   {data:[100,108,117,126,132,136,138,137,138,139],color:'#2f855a',target:138.5,suffix:' RPI',id:'sv3'},
-  {data:[1,1,2,2,3,3,3,4,4,4],color:'#2b6cb0',target:4,suffix:' reports',id:'sv4'},
+  {data:[1,1,1,2,2,2,2,2,2,2],color:'#2b6cb0',target:2,suffix:' reports',id:'sv4'},
 ];
 function drawSparkline(el,def,anim){
   const ctx=el.getContext('2d');
@@ -552,49 +570,44 @@ pcards.forEach((card,idx)=>{
   const ctx=canvas.getContext('2d');
 
   const nodes=[
-    {id:'Python',     cat:0, r:26}, // 0
-    {id:'Pandas',     cat:0, r:19}, // 1
-    {id:'NumPy',      cat:0, r:17}, // 2
-    {id:'R',          cat:0, r:14}, // 3
-    {id:'C++',        cat:0, r:15}, // 4
-    {id:'SQL',        cat:1, r:21}, // 5
-    {id:'PostgreSQL', cat:1, r:16}, // 6
-    {id:'scikit-learn',cat:2,r:21}, // 7
-    {id:'Random Forest',cat:2,r:18}, // 8
-    {id:'PyTorch',    cat:2, r:19}, // 9
-    {id:'HuggingFace',cat:2, r:17}, // 10
-    {id:'LLMs / RAG', cat:2, r:19}, // 11
-    {id:'React',      cat:3, r:17}, // 12
-    {id:'TypeScript', cat:3, r:16}, // 13
-    {id:'Next.js',    cat:3, r:15}, // 14
-    {id:'FastAPI',    cat:3, r:16}, // 15
-    {id:'Node.js',    cat:3, r:15}, // 16
-    {id:'Tableau',    cat:4, r:17}, // 17
-    {id:'Plotly',     cat:4, r:16}, // 18
-    {id:'Docker',     cat:5, r:15}, // 19
-    {id:'Git',        cat:5, r:14}, // 20
-    {id:'Linux',      cat:5, r:13}, // 21
-    {id:'Product',    cat:6, r:17}, // 22
-    {id:'GTM',        cat:6, r:14}, // 23
-    {id:'Unit Econ',  cat:6, r:14}, // 24
-    {id:'A/B Tests',  cat:6, r:13}, // 25
+    {id:'Python',       cat:0, r:26}, // 0
+    {id:'Pandas',       cat:0, r:19}, // 1
+    {id:'NumPy',        cat:0, r:17}, // 2
+    {id:'C++',          cat:0, r:14}, // 3
+    {id:'SQL',          cat:1, r:21}, // 4
+    {id:'PostgreSQL',   cat:1, r:16}, // 5
+    {id:'SQLite',       cat:1, r:14}, // 6
+    {id:'scikit-learn', cat:2, r:21}, // 7
+    {id:'Random Forest',cat:2, r:18}, // 8
+    {id:'SHAP',         cat:2, r:16}, // 9
+    {id:'LLMs / RAG',   cat:2, r:19}, // 10
+    {id:'TF-IDF',       cat:2, r:15}, // 11
+    {id:'React',        cat:3, r:17}, // 12
+    {id:'TypeScript',   cat:3, r:16}, // 13
+    {id:'FastAPI',      cat:3, r:17}, // 14
+    {id:'Node.js',      cat:3, r:14}, // 15
+    {id:'Chart.js',     cat:4, r:15}, // 16
+    {id:'Recharts',     cat:4, r:14}, // 17
+    {id:'Docker',       cat:5, r:15}, // 18
+    {id:'Git',          cat:5, r:14}, // 19
+    {id:'Linux',        cat:5, r:13}, // 20
   ];
 
   const edges=[
-    [0,1],[0,2],[0,7],[0,8],[0,9],[0,15],[0,19], // Python hub
-    [1,2],[1,5],[1,7],                            // Pandas
-    [5,6],[5,17],[5,18],                          // SQL
-    [7,8],[9,10],[10,11],                         // ML chain
-    [11,22],                                      // LLMs -> Business
-    [12,13],[12,14],[13,14],                      // React/TS/Next
-    [15,16],                                      // FastAPI-Node
-    [19,20],[19,21],                              // DevOps
-    [22,23],[22,24],[22,25],                      // Business cluster
-    [0,22],                                       // Tech-Business bridge
+    [0,1],[0,2],[0,7],[0,8],[0,14],[0,18], // Python hub
+    [1,2],[1,4],[1,7],                      // Pandas
+    [4,5],[4,6],[4,16],                     // SQL cluster
+    [7,8],[7,9],[8,9],                      // ML cluster
+    [9,10],[10,11],[10,14],                 // RAG chain
+    [12,13],[12,14],[13,14],                // React/TS/FastAPI
+    [14,15],                               // FastAPI-Node
+    [16,17],                               // Viz
+    [18,19],[18,20],                       // DevOps
+    [0,10],                                // Python -> LLMs/RAG
   ];
 
-  const CAT_COLORS=['#2c5282','#276749','#744210','#553c9a','#c05621','#374151','#9b2226'];
-  const CAT_NAMES =['Data','Databases','ML/AI','Web','Viz','DevOps','Business'];
+  const CAT_COLORS=['#2c5282','#276749','#744210','#553c9a','#c05621','#374151'];
+  const CAT_NAMES =['Data','Databases','ML/AI','Web','Viz','DevOps'];
 
   let W,H,running=false,dragging=null,dmx=0,dmy=0;
 
