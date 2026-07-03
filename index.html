@@ -335,7 +335,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas id="ch1"></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv1">N/A</div><div class="pc-lbl">price data points tracked</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Async ETL pipeline pulling CPI data from SingStat TableBuilder API (M214011). Upserts revised figures without creating duplicates. APScheduler runs background refresh on a configurable interval. Includes z-score anomaly detection endpoint that flags categories where latest inflation is 2+ standard deviations above historical mean. React + TypeScript frontend with personal spending weights.</div></div>
+            <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Async ETL pipeline pulling CPI data from SingStat TableBuilder API (M214011). Tracks 15 everyday SG items -- hawker food to supermarket staples -- sourced from SingStat's monthly survey of 150+ outlets island-wide. Upserts revised figures without creating duplicates. APScheduler runs background refresh on a configurable interval. Z-score anomaly detection flags categories where the latest rate is 2+ standard deviations above historical mean (min 6 periods). React + TypeScript frontend with personal spending weights.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span><span class="ph-tech">APScheduler</span><span class="ph-tech">React</span><span class="ph-tech">SingStat API</span></div>
           </div>
         </div>
@@ -356,7 +356,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv3">N/A</div><div class="pc-lbl">resale price index</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">HDB Resale Intelligence</div><div class="ph-body">Paginated ETL from data.gov.sg API (resource d_8b84c4ee58e3cfc0ece0d773c8ca6abc) with graceful offline fallback. All filter parameters use SQLAlchemy named bindings -- no f-string SQL injection. SQL layer includes 7 window function queries: LAG MoM delta, RANK/DENSE_RANK/NTILE town ranking, rolling 3-month average with ROWS BETWEEN, storey premium via FIRST_VALUE, YoY change with CTE chain. Chart.js dashboard, 4 tabs, no build step.</div></div>
+            <div><div class="ph-title">HDB Resale Intelligence</div><div class="ph-body">Paginated ETL from data.gov.sg API (resource d_8b84c4ee58e3cfc0ece0d773c8ca6abc) covering 26 towns with graceful offline fallback. All filter parameters use SQLAlchemy named bindings -- no f-string SQL injection. SQL layer includes 7 window function queries: LAG MoM delta, RANK/DENSE_RANK/NTILE town ranking, rolling 3-month average with ROWS BETWEEN, storey premium via FIRST_VALUE, YoY change with CTE chain. Chart.js dashboard, 4 tabs, no build step.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">SQLite</span><span class="ph-tech">data.gov.sg</span><span class="ph-tech">Chart.js</span><span class="ph-tech">Docker</span></div>
           </div>
         </div>
