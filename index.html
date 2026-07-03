@@ -314,7 +314,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas id="ch0"></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv0">N/A</div><div class="pc-lbl">ROC-AUC score</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">FraudIQ: Fraud Intelligence Platform</div><div class="ph-body">Engineered 6 fraud features (velocity, geo-deviation, device novelty, amount z-score) from the IEEE-CIS dataset (590k transactions, 3.5% fraud rate). Ensemble of Isolation Forest + Logistic Regression + Random Forest achieves ROC-AUC 0.97. SHAP values explain per-transaction risk contribution. Full-stack: React + TypeScript + FastAPI + PostgreSQL. Live on Vercel and Render.</div></div>
+            <div><div class="ph-title">FraudIQ: Fraud Intelligence Platform</div><div class="ph-body">Engineered 6 fraud features (velocity, geo-deviation, device novelty, amount z-score) from the IEEE-CIS dataset (590k transactions, 3.5% fraud rate). Ensemble of Isolation Forest + Logistic Regression + Random Forest achieves ROC-AUC 0.97 with 74.9% precision on flagged transactions. SHAP values explain per-transaction risk contribution. Full-stack: React + TypeScript + FastAPI + PostgreSQL. Live on Vercel and Render.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">scikit-learn</span><span class="ph-tech">SHAP</span><span class="ph-tech">React</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span></div>
           </div>
         </div>
@@ -377,7 +377,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv4">N/A</div><div class="pc-lbl">reports indexed</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">EarningsIQ: Financial Report Q&A</div><div class="ph-body">4-step RAG pipeline built from scratch: chunk (500-word overlapping windows, 80-word overlap), index (TF-IDF + Okapi BM25, no vector DB), retrieve (top-4 passages with relevance scores normalised to [0, 100]), generate (Llama 3.1 8B via Groq with retrieved context). Includes a /api/compare endpoint that runs both retrieval methods on the same query and returns an agreement rate. Users can upload their own PDFs. Ships with DBS 2023 and Singapore Airlines FY22/23 report excerpts.</div></div>
+            <div><div class="ph-title">EarningsIQ: Financial Report Q&A</div><div class="ph-body">4-step RAG pipeline built from scratch: chunk (500-word overlapping windows, 80-word overlap), index (TF-IDF + Okapi BM25, no vector DB), retrieve (top-4 passages in &lt;1ms -- pure in-memory, no network call on retrieval), generate (Llama 3.1 8B via Groq with retrieved context). Includes a /api/compare endpoint that runs both retrieval methods on the same query and returns an agreement rate. Users can upload their own PDFs. Ships with DBS 2023 and Singapore Airlines FY22/23 report excerpts.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">BM25</span><span class="ph-tech">TF-IDF</span><span class="ph-tech">Groq</span><span class="ph-tech">Docker</span></div>
           </div>
         </div>
