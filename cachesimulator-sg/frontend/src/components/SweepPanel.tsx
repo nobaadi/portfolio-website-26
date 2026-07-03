@@ -48,7 +48,7 @@ export default function SweepPanel({ data, sweepLevel, config, onClose }: Props)
       return da < db ? c : best;
     });
     const ratio = Math.max(cliffSizeKb, nearest.kb) / Math.min(cliffSizeKb, nearest.kb);
-    const context = ratio <= 4 ? ` — ${nearest.name} boundary` : '';
+    const context = ratio <= 4 ? `: ${nearest.name} boundary` : '';
     return `Cliff at ${sizeStr}${context}`;
   })();
 
@@ -63,7 +63,7 @@ export default function SweepPanel({ data, sweepLevel, config, onClose }: Props)
             {sweepLevel} Size <span className="serif">Sweep</span>
           </h3>
           <p className="sweep-sub">
-            Hit rate vs {sweepLevel} cache size — {data.workload.replace('_', ' ')} · {data.working_set_kb}KB working set
+            Hit rate vs {sweepLevel} cache size: {data.workload.replace('_', ' ')} · {data.working_set_kb}KB working set
           </p>
         </div>
         <button className="btn-close" onClick={onClose} type="button">✕ Close</button>

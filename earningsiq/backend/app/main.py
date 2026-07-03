@@ -51,7 +51,6 @@ async def startup():
 
 class QueryRequest(BaseModel):
     query: str
-    api_key: str
     document_id: str
     retrieval_mode: Literal["tfidf", "bm25"] = "bm25"
 
@@ -75,12 +74,7 @@ async def ingest_document(req: IngestRequest):
 
 @app.post("/api/query")
 async def query_document(req: QueryRequest):
-    if not req.api_key.startswith("sk-ant-"):
-        raise HTTPException(
-            status_code=400,
-            detail="Invalid Anthropic API key format (must start with sk-ant-)",
-        )
-    result = await rag.query(req.document_id, req.query, req.api_key, req.retrieval_mode)
+    result = await rag.query(req.document_id, req.query, req.retrieval_mode)
     return result
 
 

@@ -25,6 +25,7 @@ Generation:
   answer and is instructed to cite passage numbers explicitly.
 """
 
+import os
 import re
 import math
 import logging
@@ -254,7 +255,6 @@ class RAGPipeline:
         self,
         doc_id: str,
         question: str,
-        api_key: str,
         retrieval_mode: str = "bm25",
     ) -> dict:
         if doc_id not in self._tfidf:
@@ -265,6 +265,10 @@ class RAGPipeline:
 
         if not retrieved:
             return {"answer": "No relevant passages found.", "retrieved": [], "retrieval_mode": retrieval_mode}
+
+        api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+        if not api_key:
+            return {"error": "ANTHROPIC_API_KEY not set on server.", "answer": None, "retrieved": retrieved}
 
         context = "\n\n---\n\n".join(
             f"[Passage {i + 1}]\n{r['text']}" for i, r in enumerate(retrieved)

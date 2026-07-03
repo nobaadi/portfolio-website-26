@@ -136,7 +136,7 @@ export default function AlertsPage() {
       <div className="card p-0 overflow-hidden">
         <div className="px-6 py-4 border-b border-surface-600 flex items-center justify-between">
           <span className="text-sm font-medium text-slate-300">
-            Sorted by risk score — click any row to investigate
+            Sorted by risk score. Click any row to investigate
           </span>
           <div className="flex items-center gap-2">
             <button

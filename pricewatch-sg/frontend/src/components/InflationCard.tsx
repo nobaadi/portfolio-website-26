@@ -79,9 +79,9 @@ export default function InflationCard({ result }: Props) {
   const pressureSummary =
     diff !== null
       ? diff < 0
-        ? 'Your basket has lower price pressure than national CPI — your largest spending shares are in slower-rising categories.'
+        ? 'Your basket has lower price pressure than national CPI. Your largest spending shares are in slower-rising categories.'
         : diff > 0
-          ? 'Your basket has higher price pressure than national CPI — your largest spending shares are in faster-rising categories.'
+          ? 'Your basket has higher price pressure than national CPI. Your largest spending shares are in faster-rising categories.'
           : 'Your basket pressure is similar to national CPI.'
       : 'Unable to compute pressure comparison.';
 
@@ -144,7 +144,7 @@ export default function InflationCard({ result }: Props) {
         <div className="mt-1.5 rounded-xl border border-neutral-200 bg-neutral-50 px-3 py-2.5 space-y-2 text-[11px] text-neutral-600 leading-relaxed animate-slide-up">
           <p>
             <strong>Formula:</strong> Personal inflation = Σ(spending share × category CPI rate).
-            Spending scale alone doesn't determine your rate — it's about <em>where</em> you spend.
+            Spending scale alone doesn't determine your rate. It's about <em>where</em> you spend.
           </p>
           <p>{pressureSummary}</p>
           {topWeightRows.length > 0 && (
@@ -156,7 +156,7 @@ export default function InflationCard({ result }: Props) {
             </p>
           )}
           <p className="text-neutral-500">
-            Switching the household benchmark (top-right) changes the CPI reference rates — not your spending amounts.
+            Switching the household benchmark (top-right) changes the CPI reference rates, not your spending amounts.
           </p>
         </div>
       )}

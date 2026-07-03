@@ -279,7 +279,7 @@ export default function Dashboard() {
         ? result.personal_inflation_rate - result.national_inflation_rate
         : null;
     const lines = [
-      'PriceWatch SG — Personal Inflation Summary',
+      'PriceWatch SG: Personal Inflation Summary',
       `Period: ${result.period}`,
       `Personal Rate: ${result.personal_inflation_rate !== null ? (result.personal_inflation_rate >= 0 ? '+' : '') + result.personal_inflation_rate.toFixed(2) + '%' : 'N/A'}`,
       `National CPI: ${result.national_inflation_rate !== null ? (result.national_inflation_rate >= 0 ? '+' : '') + result.national_inflation_rate.toFixed(2) + '%' : 'N/A'}`,

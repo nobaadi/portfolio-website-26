@@ -91,7 +91,7 @@ export default function UploadPage() {
             Initial labels are derived from anomaly detection. When you mark transactions as{' '}
             <span style={{ color:'#fca5a5' }}>Confirmed Fraud</span> or{' '}
             <span style={{ color:'#6ee7b7' }}>False Positive</span> in the Investigate view,
-            those verified labels retrain the supervised models — improving accuracy over time.
+            those verified labels retrain the supervised models, improving accuracy over time.
           </p>
         </div>
       </div>

@@ -136,10 +136,10 @@ export default function CacheConfigPanel({ config, onChange, presets }: Props) {
 
   const warnings: string[] = [];
   if (config.L1.size_kb >= config.L2.size_kb) {
-    warnings.push(`L1 (${config.L1.size_kb} KB) ≥ L2 (${config.L2.size_kb} KB) — real CPUs always have L1 < L2.`);
+    warnings.push(`L1 (${config.L1.size_kb} KB) ≥ L2 (${config.L2.size_kb} KB). Real CPUs always have L1 < L2.`);
   }
   if (config.L2.size_kb >= config.L3.size_kb) {
-    warnings.push(`L2 (${config.L2.size_kb} KB) ≥ L3 (${config.L3.size_kb} KB) — real CPUs always have L2 < L3.`);
+    warnings.push(`L2 (${config.L2.size_kb} KB) ≥ L3 (${config.L3.size_kb} KB). Real CPUs always have L2 < L3.`);
   }
 
   return (

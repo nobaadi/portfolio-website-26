@@ -223,7 +223,7 @@ export default function ActionRecommendations({ result }: Props) {
           <div className="bg-red-50 border border-red-100 rounded-xl p-2.5 animate-slide-up" style={{ animationDelay: '160ms' }}>
             <p className="text-[10px] text-red-700 font-medium mb-1 uppercase tracking-wide">Align with national CPI pressure</p>
             <p className="text-xs text-red-800 break-normal leading-relaxed">
-              <strong>{gapToNational?.toFixed(2)} pp</strong> above avg —
+              <strong>{gapToNational?.toFixed(2)} pp</strong> above avg.
               cut ~<strong>{formatSgd(cutToMatchNational)}/mo</strong> from <strong>{topDriver.category}</strong>.
             </p>
           </div>

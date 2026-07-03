@@ -5,13 +5,13 @@ const concepts = [
     term: 'Cache Hit',
     emoji: '✅',
     color: 'var(--accent-green)',
-    desc: 'The requested data is found in cache. No main memory access needed — fast!',
+    desc: 'The requested data is found in cache. No main memory access needed. Fast!',
   },
   {
     term: 'Cache Miss',
     emoji: '❌',
     color: 'var(--accent-red)',
-    desc: 'Data not in cache. Must fetch from a slower level — increases latency significantly.',
+    desc: 'Data not in cache. Must fetch from a slower level. Increases latency significantly.',
   },
   {
     term: 'Associativity',
@@ -35,7 +35,7 @@ const concepts = [
     term: 'Memory Traffic',
     emoji: '🚦',
     color: 'var(--accent-cyan)',
-    desc: 'Total bytes fetched from main memory. Lower is better — reduces bus contention and power.',
+    desc: 'Total bytes fetched from main memory. Lower is better. Reduces bus contention and power.',
   },
 ];
 

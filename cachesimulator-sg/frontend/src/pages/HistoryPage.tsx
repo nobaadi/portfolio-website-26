@@ -152,7 +152,7 @@ export default function HistoryPage() {
       {selectedId !== null && (
         <div className="card history-detail">
           <div className="history-detail-header">
-            <h3>Experiment #{selectedId} — Full Results</h3>
+            <h3>Experiment #{selectedId}: Full Results</h3>
             <button className="btn-close" onClick={() => setSelectedId(null)}>✕ Close</button>
           </div>
           {detailLoading && <p className="loading-text">Loading results…</p>}

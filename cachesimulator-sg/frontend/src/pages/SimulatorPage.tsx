@@ -12,7 +12,7 @@ import './SimulatorPage.css';
 
 function getErrorMessage(error: Error): string {
   if (error.message === 'Network Error' || error.message.includes('ERR_CONNECTION_REFUSED')) {
-    return 'Backend offline — start FastAPI on port 8001.';
+    return 'Backend offline. Start FastAPI on port 8001.';
   }
   return error.message;
 }
