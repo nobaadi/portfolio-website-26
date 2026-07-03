@@ -1,0 +1,44 @@
+.explainer { padding: 22px; }
+
+.explainer h3 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 8px;
+}
+
+.concept-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  border-left: 3px solid transparent;
+  padding: 10px 12px;
+  transition: box-shadow 0.15s;
+}
+
+.concept-item:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.concept-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.concept-item p {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}

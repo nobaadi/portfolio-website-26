@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HDB Resale Intelligence</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { border-top: 2px solid #f59e0b; }
+
+    :root {
+      --bg: #18181b;
+      --surface: #1f1f23;
+      --border: #2e2e33;
+      --accent: #f59e0b;
+      --blue: #38bdf8;
+      --text: #fafafa;
+      --muted: #71717a;
+      --muted2: #a1a1aa;
+      --green: #4ade80;
+      --red: #f87171;
+      --danger: #f87171;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 12px; }
+
+    .logo-mark {
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    header h1 { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+    header .subtitle { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    .source-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      padding: 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav button {
+      padding: 11px 16px;
+      border: none;
+      background: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color .12s, border-color .12s;
+      font-family: inherit;
+    }
+    nav button:hover { color: var(--muted2); }
+    nav button.active { color: var(--text); border-bottom-color: var(--accent); }
+
+    /* TABS */
+    .tab { display: none; }
+    .tab.active { display: block; }
+
+    /* KPI STRIP */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .kpi {
+      padding: 26px 40px;
+      border-right: 1px solid var(--border);
+    }
+    .kpi:last-child { border-right: none; }
+
+    .kpi .label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 10px;
+    }
+
+    .kpi .value {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+
+    .kpi .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .kpi .sub { font-size: 11px; color: var(--muted); }
+
+    .delta {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .delta.up { color: var(--green); background: rgba(74,222,128,.1); }
+    .delta.down { color: var(--red); background: rgba(248,113,113,.1); }
+
+    /* INSIGHT BAR */
+    .insight-bar {
+      padding: 10px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 12px;
+      color: var(--muted2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 38px;
+    }
+
+    .insight-bar strong { color: var(--text); font-weight: 600; }
+    .insight-bar .up { color: var(--green); }
+    .insight-bar .down { color: var(--red); }
+    .insight-sep { color: var(--border); margin: 0 8px; }
+
+    /* CHART AREA */
+    .chart-main { padding: 32px 40px; border-bottom: 1px solid var(--border); }
+
+    .chart-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 20px;
+    }
+
+    /* FLAT TYPE GRID */
+    .flat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .flat-cell {
+      padding: 16px 40px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .flat-cell:last-child { border-right: none; }
+
+    .flat-cell .ft-type {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ft-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .flat-cell .ft-price { font-size: 16px; font-weight: 700; letter-spacing: -.02em; }
+    .flat-cell .ft-vol { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    /* SECTION */
+    .section { padding: 32px 40px; }
+    .chart-block { margin-bottom: 36px; }
+    .chart-block:last-child { margin-bottom: 0; }
+
+    canvas { max-height: 320px; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      padding: 16px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .filter-group { display: flex; flex-direction: column; gap: 5px; }
+
+    .filter-group label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    select, input[type=text], input[type=number] {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 10px;
+      border-radius: 5px;
+      font-size: 13px;
+      min-width: 130px;
+      outline: none;
+      font-family: inherit;
+    }
+    select:focus, input:focus { border-color: var(--accent); }
+
+    button.btn {
+      padding: 7px 16px;
+      background: var(--accent);
+      color: #111;
+      border: none;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    button.btn:hover { opacity: .88; }
+
+    button.btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted2);
+    }
+
+    /* TABLE */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    th {
+      text-align: left;
+      padding: 8px 14px;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted2);
+    }
+    td:first-child { color: var(--text); }
+    tr:hover td { background: rgba(245,158,11,.03); }
+
+    .price { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+    .pagination { display: flex; gap: 8px; align-items: center; margin-top: 20px; }
+    .page-info { font-size: 12px; color: var(--muted); margin: 0 8px; }
+
+    .loading { text-align: center; padding: 52px; color: var(--muted); font-size: 13px; }
+
+    .error {
+      margin: 20px 40px 0;
+      padding: 12px 16px;
+      background: rgba(248,113,113,.05);
+      border: 1px solid rgba(248,113,113,.15);
+      border-radius: 5px;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+    @media (max-width: 960px) {
+      .kpi-strip { grid-template-columns: 1fr 1fr; }
+      .flat-grid { grid-template-columns: 1fr 1fr; }
+      header, nav, .section, .chart-main { padding-left: 20px; padding-right: 20px; }
+      .kpi, .flat-cell { padding-left: 20px; padding-right: 20px; }
+      .filter-bar, .insight-bar { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-mark">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+        <path d="M1.5 9L9 2.5L16.5 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 7.5V15H8V11.5H10V15H14V7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <h1>HDB Resale Intelligence</h1>
+      <div class="subtitle">Singapore public housing &middot; data.gov.sg</div>
+    </div>
+  </div>
+  <div class="source-badge" id="source-badge">
+    <span class="live-dot" id="live-dot" style="display:none"></span>
+    <span id="source-text">loading</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="switchTab('overview', this)">Overview</button>
+  <button onclick="switchTab('bytown', this)">Price by Town</button>
+  <button onclick="switchTab('trend', this)">Price Trend</button>
+  <button onclick="switchTab('explorer', this)">Explorer</button>
+</nav>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <div id="tab-overview" class="tab active">
+    <div id="overview-error" class="error" style="display:none"></div>
+
+    <div id="kpi-grid" class="kpi-strip">
+      <div class="kpi"><div class="loading">Loading...</div></div>
+    </div>
+
+    <div class="insight-bar" id="insight-bar">&nbsp;</div>
+
+    <div class="chart-main">
+      <div class="chart-label" id="overview-chart-label">Price Trend</div>
+      <canvas id="trend-overview-chart" style="max-height:320px"></canvas>
+    </div>
+
+    <div class="flat-grid" id="flat-grid"></div>
+  </div>
+
+  <!-- BY TOWN -->
+  <div id="tab-bytown" class="tab">
+    <div id="bytown-error" class="error" style="display:none"></div>
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Flat Type</label>
+        <select id="bytown-flattype" onchange="loadByTown()">
+          <option value="">All Types</option>
+        </select>
+      </div>
+    </div>
+    <div class="section">
+      <div class="chart-label">Average Resale Price by Town</div>
+      <canvas id="town-chart" style="max-height:560px"></canvas>
+    </div>
+  </div>
+
+  <!-- TREND -->
+  <div id="tab-trend" class="tab">
+    <div id="trend-error" class="error" style="display:none"></div>
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Town</label>
+        <select id="trend-town" onchange="loadTrend()">
+          <option value="">All Towns</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Flat Type</label>
+        <select id="trend-flattype" onchange="loadTrend()">
+          <option value="">All Types</option>
+        </select>
+      </div>
+    </div>
+    <div class="section">
+      <div class="chart-block">
+        <div class="chart-label">Monthly Average Price</div>
+        <canvas id="trend-chart"></canvas>
+      </div>
+      <div class="chart-block">
+        <div class="chart-label">Monthly Transaction Volume</div>
+        <canvas id="volume-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPLORER -->
+  <div id="tab-explorer" class="tab">
+    <div id="explorer-error" class="error" style="display:none"></div>
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Town</label>
+        <select id="exp-town"><option value="">All Towns</option></select>
+      </div>
+      <div class="filter-group">
+        <label>Flat Type</label>
+        <select id="exp-flattype"><option value="">All Types</option></select>
+      </div>
+      <div class="filter-group">
+        <label>From</label>
+        <input type="text" id="exp-month-from" placeholder="2025-01" style="min-width:105px" />
+      </div>
+      <div class="filter-group">
+        <label>To</label>
+        <input type="text" id="exp-month-to" placeholder="2026-07" style="min-width:105px" />
+      </div>
+      <div class="filter-group">
+        <label>Min Price</label>
+        <input type="number" id="exp-min-price" placeholder="200000" style="min-width:115px" />
+      </div>
+      <div class="filter-group">
+        <label>Max Price</label>
+        <input type="number" id="exp-max-price" placeholder="1500000" style="min-width:115px" />
+      </div>
+      <div class="filter-group" style="justify-content:flex-end">
+        <label>&nbsp;</label>
+        <button class="btn" onclick="searchTransactions()">Search</button>
+      </div>
+    </div>
+    <div class="section">
+      <div id="explorer-table"><div class="loading">Set filters above and click Search.</div></div>
+      <div class="pagination" id="pagination" style="display:none">
+        <button class="btn btn-ghost" id="prev-btn" onclick="changePage(-1)">&#8592; Prev</button>
+        <span class="page-info" id="page-info"></span>
+        <button class="btn btn-ghost" id="next-btn" onclick="changePage(1)">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const API = 'https://hdb-intelligence.onrender.com';
+  let charts = {};
+  let explorerState = { page: 1, total: 0, page_size: 50 };
+
+  async function get(path) {
+    const r = await fetch(API + path);
+    if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+    return r.json();
+  }
+
+  function fmt(n) { return n == null ? '-' : Number(n).toLocaleString('en-SG'); }
+  function fmtSGD(n) { return n == null ? '-' : 'S$' + Number(n).toLocaleString('en-SG', {maximumFractionDigits: 0}); }
+  function showError(id, msg) { const el = document.getElementById(id); el.textContent = msg; el.style.display = 'block'; }
+  function clearError(id) { document.getElementById(id).style.display = 'none'; }
+  function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+
+  const G = { grid: { color: '#2e2e33' }, ticks: { color: '#71717a' } };
+
+  const TOOLTIP = {
+    backgroundColor: '#1f1f23',
+    borderColor: '#2e2e33',
+    borderWidth: 1,
+    titleColor: '#a1a1aa',
+    bodyColor: '#fafafa',
+    padding: 10,
+  };
+
+  const FT_COLORS = ['#f59e0b','#38bdf8','#a78bfa','#4ade80','#f472b6','#fb923c','#94a3b8'];
+
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+    if (name === 'bytown') loadByTown();
+    if (name === 'trend') loadTrend();
+    if (name === 'explorer') prepareExplorer();
+  }
+
+  async function loadOverview() {
+    clearError('overview-error');
+    try {
+      const [summary, trend, byFlatType] = await Promise.all([
+        get('/api/analytics/summary'),
+        get('/api/analytics/trend'),
+        get('/api/analytics/by-flat-type'),
+      ]);
+
+      const isLive = summary.total_transactions !== 3000;
+      document.getElementById('source-text').textContent = isLive ? 'data.gov.sg' : 'synthetic data';
+      if (isLive) document.getElementById('live-dot').style.display = 'block';
+
+      // Calculate price delta
+      let deltaHtml = '';
+      if (trend.length >= 2) {
+        const first = trend[0].avg_price;
+        const last = trend[trend.length - 1].avg_price;
+        const pct = ((last - first) / first * 100);
+        const sign = pct >= 0 ? '+' : '';
+        const cls = pct >= 0 ? 'up' : 'down';
+        deltaHtml = `<span class="delta ${cls}">${sign}${pct.toFixed(1)}%</span>`;
+      }
+
+      document.getElementById('kpi-grid').innerHTML = `
+        <div class="kpi">
+          <div class="label">Total Transactions</div>
+          <div class="value">${fmt(summary.total_transactions)}</div>
+          <div class="meta"><span class="sub">${summary.data_from ?? '-'} to ${summary.data_to ?? '-'}</span></div>
+        </div>
+        <div class="kpi">
+          <div class="label">Avg Resale Price</div>
+          <div class="value" style="font-size:30px">${fmtSGD(summary.avg_price)}</div>
+          <div class="meta">${deltaHtml}<span class="sub">across all flat types</span></div>
+        </div>
+        <div class="kpi">
+          <div class="label">Avg Price / sqm</div>
+          <div class="value">${fmtSGD(summary.avg_price_per_sqm)}</div>
+          <div class="meta"><span class="sub">per square metre</span></div>
+        </div>
+        <div class="kpi">
+          <div class="label">Busiest Town</div>
+          <div class="value" style="font-size:22px;padding-top:5px;letter-spacing:-.02em">${summary.busiest_town ?? '-'}</div>
+          <div class="meta"><span class="sub">${fmt(summary.busiest_town_count)} transactions</span></div>
+        </div>
+      `;
+
+      // Insight bar
+      if (trend.length >= 2) {
+        const first = trend[0];
+        const last = trend[trend.length - 1];
+        const pct = ((last.avg_price - first.avg_price) / first.avg_price * 100);
+        const dir = pct >= 0 ? 'up' : 'down';
+        const arrow = pct >= 0 ? '↑' : '↓';
+        const executive = byFlatType.find(r => r.flat_type === 'EXECUTIVE');
+        document.getElementById('insight-bar').innerHTML = `
+          Resale prices <span class="${dir}"><strong>${arrow} ${Math.abs(pct).toFixed(1)}%</strong></span> from ${first.month} to ${last.month}
+          <span class="insight-sep">·</span>
+          Latest avg <strong>${fmtSGD(last.avg_price)}</strong> (${last.month})
+          ${executive ? `<span class="insight-sep">·</span> Executive avg <strong>${fmtSGD(executive.avg_price)}</strong>` : ''}
+          <span class="insight-sep">·</span>
+          Busiest: <strong>${summary.busiest_town}</strong>
+        `;
+      }
+
+      // Main chart: monthly or yearly based on data span
+      const years = [...new Set(trend.map(r => r.month.slice(0, 4)))];
+      let chartLabels, chartData;
+      if (years.length > 1) {
+        const byYear = {};
+        trend.forEach(r => {
+          const y = r.month.slice(0, 4);
+          if (!byYear[y]) byYear[y] = { sum: 0, count: 0 };
+          byYear[y].sum += r.avg_price; byYear[y].count++;
+        });
+        chartLabels = Object.keys(byYear).sort();
+        chartData = chartLabels.map(y => Math.round(byYear[y].sum / byYear[y].count));
+        document.getElementById('overview-chart-label').textContent = 'Year-on-Year Average Price';
+      } else {
+        chartLabels = trend.map(r => r.month);
+        chartData = trend.map(r => r.avg_price);
+        document.getElementById('overview-chart-label').textContent = 'Monthly Price Trend';
+      }
+
+      destroyChart('trend-overview-chart');
+      charts['trend-overview-chart'] = new Chart(document.getElementById('trend-overview-chart'), {
+        type: 'line',
+        data: {
+          labels: chartLabels,
+          datasets: [{
+            data: chartData,
+            borderColor: '#f59e0b',
+            backgroundColor: ctx => {
+              const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, ctx.chart.height);
+              g.addColorStop(0, 'rgba(245,158,11,0.22)');
+              g.addColorStop(1, 'rgba(245,158,11,0)');
+              return g;
+            },
+            fill: true,
+            tension: .4,
+            pointRadius: 5,
+            pointBackgroundColor: '#f59e0b',
+            pointBorderColor: '#18181b',
+            pointBorderWidth: 2,
+            pointHoverRadius: 7,
+            borderWidth: 2.5,
+          }],
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { ...TOOLTIP, callbacks: { label: ctx => '  ' + fmtSGD(ctx.raw) } }
+          },
+          scales: {
+            x: { grid: G.grid, ticks: G.ticks },
+            y: {
+              grid: G.grid,
+              ticks: { ...G.ticks, callback: v => 'S$' + (v/1000).toFixed(0) + 'k' }
+            },
+          },
+        },
+      });
+
+      // Flat type grid
+      document.getElementById('flat-grid').innerHTML = byFlatType.map((r, i) => `
+        <div class="flat-cell">
+          <div class="ft-type">
+            <span class="ft-dot" style="background:${FT_COLORS[i % FT_COLORS.length]}"></span>
+            ${r.flat_type}
+          </div>
+          <div class="ft-price">${fmtSGD(r.avg_price)}</div>
+          <div class="ft-vol">${fmt(r.volume)} transactions</div>
+        </div>
+      `).join('');
+
+    } catch (e) {
+      showError('overview-error', 'Could not load overview: ' + e.message);
+      document.getElementById('kpi-grid').innerHTML = '';
+    }
+  }
+
+  async function loadByTown() {
+    clearError('bytown-error');
+    const ft = document.getElementById('bytown-flattype').value;
+    const qs = ft ? `?flat_type=${encodeURIComponent(ft)}` : '';
+    try {
+      const data = await get('/api/analytics/by-town' + qs);
+      destroyChart('town-chart');
+      charts['town-chart'] = new Chart(document.getElementById('town-chart'), {
+        type: 'bar',
+        data: {
+          labels: data.map(r => r.town),
+          datasets: [{
+            data: data.map(r => r.avg_price),
+            backgroundColor: data.map((_, i) => i < 5 ? '#f59e0b' : '#2e2e33'),
+            borderRadius: 3,
+            borderSkipped: false,
+          }],
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { ...TOOLTIP, callbacks: { label: ctx => '  ' + fmtSGD(ctx.raw) } }
+          },
+          scales: {
+            x: { grid: G.grid, ticks: { ...G.ticks, callback: v => 'S$' + (v/1000).toFixed(0) + 'k' } },
+            y: { grid: { display: false }, ticks: { color: '#a1a1aa', font: { size: 11 } } },
+          },
+        },
+      });
+    } catch (e) {
+      showError('bytown-error', e.message);
+    }
+  }
+
+  async function loadTrend() {
+    clearError('trend-error');
+    const town = document.getElementById('trend-town').value;
+    const ft = document.getElementById('trend-flattype').value;
+    const params = new URLSearchParams();
+    if (town) params.set('town', town);
+    if (ft) params.set('flat_type', ft);
+    const qs = params.toString() ? '?' + params : '';
+    try {
+      const data = await get('/api/analytics/trend' + qs);
+
+      destroyChart('trend-chart');
+      charts['trend-chart'] = new Chart(document.getElementById('trend-chart'), {
+        type: 'line',
+        data: {
+          labels: data.map(r => r.month),
+          datasets: [{
+            data: data.map(r => r.avg_price),
+            borderColor: '#f59e0b',
+            backgroundColor: ctx => {
+              const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, ctx.chart.height);
+              g.addColorStop(0, 'rgba(245,158,11,0.18)');
+              g.addColorStop(1, 'rgba(245,158,11,0)');
+              return g;
+            },
+            fill: true,
+            tension: .3,
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            borderWidth: 2,
+          }],
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { display: false }, tooltip: { ...TOOLTIP, callbacks: { label: ctx => '  ' + fmtSGD(ctx.raw) } } },
+          scales: {
+            x: { grid: G.grid, ticks: { ...G.ticks, maxTicksLimit: 12 } },
+            y: { grid: G.grid, ticks: { ...G.ticks, callback: v => 'S$' + (v/1000).toFixed(0) + 'k' } },
+          },
+        },
+      });
+
+      destroyChart('volume-chart');
+      charts['volume-chart'] = new Chart(document.getElementById('volume-chart'), {
+        type: 'bar',
+        data: {
+          labels: data.map(r => r.month),
+          datasets: [{
+            data: data.map(r => r.volume),
+            backgroundColor: 'rgba(56,189,248,0.5)',
+            hoverBackgroundColor: 'rgba(56,189,248,0.75)',
+            borderRadius: 3,
+          }],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: G.grid, ticks: { ...G.ticks, maxTicksLimit: 12 } },
+            y: { grid: G.grid, ticks: G.ticks },
+          },
+        },
+      });
+    } catch (e) {
+      showError('trend-error', e.message);
+    }
+  }
+
+  async function prepareExplorer() {}
+
+  async function searchTransactions(resetPage = true) {
+    if (resetPage) explorerState.page = 1;
+    clearError('explorer-error');
+    const params = new URLSearchParams();
+    const town = document.getElementById('exp-town').value;
+    const ft = document.getElementById('exp-flattype').value;
+    const mf = document.getElementById('exp-month-from').value.trim();
+    const mt = document.getElementById('exp-month-to').value.trim();
+    const minP = document.getElementById('exp-min-price').value;
+    const maxP = document.getElementById('exp-max-price').value;
+    if (town) params.set('town', town);
+    if (ft) params.set('flat_type', ft);
+    if (mf) params.set('month_from', mf);
+    if (mt) params.set('month_to', mt);
+    if (minP) params.set('min_price', minP);
+    if (maxP) params.set('max_price', maxP);
+    params.set('page', explorerState.page);
+    params.set('page_size', explorerState.page_size);
+    try {
+      const result = await get('/api/transactions/?' + params);
+      explorerState.total = result.total;
+      if (!result.data.length) {
+        document.getElementById('explorer-table').innerHTML = '<div class="loading">No transactions match these filters.</div>';
+        document.getElementById('pagination').style.display = 'none';
+        return;
+      }
+      const rows = result.data.map(r => `
+        <tr>
+          <td>${r.month}</td><td>${r.town}</td><td>${r.flat_type}</td>
+          <td>${r.storey_range || '-'}</td>
+          <td>${r.floor_area_sqm ? r.floor_area_sqm + ' sqm' : '-'}</td>
+          <td class="price">${fmtSGD(r.resale_price)}</td>
+          <td class="price">${r.price_per_sqm ? fmtSGD(r.price_per_sqm) + '/sqm' : '-'}</td>
+          <td>${r.remaining_lease || '-'}</td>
+        </tr>
+      `).join('');
+      document.getElementById('explorer-table').innerHTML = `
+        <table>
+          <thead><tr>
+            <th>Month</th><th>Town</th><th>Flat Type</th><th>Storey</th>
+            <th>Area</th><th>Price</th><th>Price/sqm</th><th>Lease Left</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+      const totalPages = Math.ceil(result.total / explorerState.page_size);
+      document.getElementById('pagination').style.display = 'flex';
+      document.getElementById('page-info').textContent =
+        `Page ${explorerState.page} of ${totalPages} (${fmt(result.total)} results)`;
+      document.getElementById('prev-btn').disabled = explorerState.page <= 1;
+      document.getElementById('next-btn').disabled = explorerState.page >= totalPages;
+    } catch (e) {
+      showError('explorer-error', e.message);
+    }
+  }
+
+  function changePage(delta) {
+    explorerState.page += delta;
+    searchTransactions(false);
+  }
+
+  async function loadFilters() {
+    try {
+      const [towns, flatTypes] = await Promise.all([
+        get('/api/towns/'),
+        get('/api/towns/flat-types'),
+      ]);
+      const townOpts = towns.map(t => `<option value="${t}">${t}</option>`).join('');
+      const ftOpts = flatTypes.map(f => `<option value="${f}">${f}</option>`).join('');
+      ['bytown-flattype', 'trend-flattype', 'exp-flattype'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.insertAdjacentHTML('beforeend', ftOpts);
+      });
+      ['trend-town', 'exp-town'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.insertAdjacentHTML('beforeend', townOpts);
+      });
+    } catch (e) {}
+  }
+
+  loadFilters();
+  loadOverview();
+</script>
+</body>
+</html>

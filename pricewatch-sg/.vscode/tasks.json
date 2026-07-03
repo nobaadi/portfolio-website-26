@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run app with Docker Compose",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"up",
+				"--build"
+			],
+			"isBackground": true,
+			"group": "build"
+		}
+	]
+}

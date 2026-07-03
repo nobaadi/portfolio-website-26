@@ -1,0 +1,65 @@
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import text
+from app.config import get_settings
+from app.database import engine, Base
+from app.routers import transactions
+from app.seed import seed_database
+
+
+DEFAULT_CORS_ORIGINS = ["http://localhost:3000", "http://localhost:5173"]
+VERCEL_PREVIEW_ORIGIN_REGEX = r"https://.*\.vercel\.app"
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        Base.metadata.create_all(bind=engine)
+        # Safely add new columns to existing tables
+        with engine.connect() as conn:
+            conn.execute(text(
+                "ALTER TABLE transactions ADD COLUMN IF NOT EXISTS review_status VARCHAR(32)"
+            ))
+            conn.commit()
+    except SQLAlchemyError:
+        # Keep the API process alive even if the database is not reachable yet.
+        # Core read-only routes can still serve while the database is being configured.
+        pass
+    seed_database()
+    yield
+
+
+app = FastAPI(
+    title="Fraud Intelligence Platform",
+    description="Professional fraud detection and investigation system",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+
+def parse_cors_origins(raw_origins: str) -> list[str]:
+    origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+    if origins:
+        return origins
+    return DEFAULT_CORS_ORIGINS
+
+
+settings = get_settings()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=parse_cors_origins(settings.cors_origins),
+    allow_origin_regex=VERCEL_PREVIEW_ORIGIN_REGEX,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(transactions.router)
+
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok", "service": "Fraud Intelligence Platform"}

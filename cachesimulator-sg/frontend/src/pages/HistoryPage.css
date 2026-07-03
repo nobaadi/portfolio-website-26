@@ -1,0 +1,127 @@
+/* Viewport-locked: header row + table fills remaining height */
+.history-page {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 14px;
+  height: 100%;
+  min-height: 0;
+  animation: fadeIn 0.35s var(--ease-out) both;
+}
+
+.history-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.history-header h2 {
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 800; letter-spacing: -0.045em; line-height: 1;
+  animation: fadeInUp 0.4s var(--ease-out) both;
+}
+
+.history-header h2 .serif { font-size: 1.08em; }
+
+.btn-export {
+  background: var(--text-primary); color: #fff;
+  font-weight: 600; font-size: 12px; letter-spacing: -0.01em;
+  padding: 8px 16px; border-radius: var(--radius-sm); border: none;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.18s var(--ease-spring);
+  animation: fadeIn 0.5s var(--ease-out) 0.1s both;
+}
+.btn-export:hover { opacity: 0.75; transform: translateY(-2px); }
+
+/* Table card fills remaining height with internal scroll */
+.table-wrapper.card {
+  overflow-y: auto;
+  min-height: 0;
+  animation: fadeInUp 0.4s var(--ease-out) 0.1s both;
+}
+
+.empty { padding: 48px; text-align: center; color: var(--text-secondary); font-size: 13px; }
+.loading-text { color: var(--text-muted); padding: 24px 0; font-size: 13px; }
+
+.skeleton-table { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.skeleton-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); }
+.skeleton-row:last-child { border-bottom: none; }
+.table-hint { font-size: 10.5px; color: var(--text-muted); padding: 9px 18px 3px; margin: 0; }
+
+.exp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+.exp-table th {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--bg-elevated); color: var(--text-muted);
+  font-weight: 700; text-transform: uppercase; font-size: 9.5px;
+  letter-spacing: 0.09em; padding: 9px 18px; text-align: left;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+
+.exp-table td {
+  padding: 11px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary); white-space: nowrap; transition: background 0.12s;
+}
+
+.exp-table tr:last-child td { border-bottom: none; }
+
+.exp-row {
+  cursor: pointer;
+  animation: fadeIn 0.22s var(--ease-out) both;
+  transition: background 0.12s;
+}
+
+.exp-row:hover td { background: var(--bg-elevated); }
+.exp-row.selected td { background: rgba(20,18,16,0.04); }
+.exp-row.selected td:first-child { border-left: 3px solid var(--text-primary); padding-left: 15px; }
+
+.id-cell { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.muted { color: var(--text-muted); }
+
+.workload-tag {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); padding: 2px 8px;
+  font-size: 10.5px; font-weight: 500; color: var(--text-secondary); text-transform: capitalize;
+}
+
+.sizes-badges { display: flex; gap: 4px; align-items: center; }
+.size-badge {
+  font-size: 9.5px; font-weight: 700; padding: 1px 5px;
+  border-radius: var(--radius-xs); letter-spacing: 0.03em;
+}
+.size-badge.l1 { background: rgba(5,150,105,0.12); color: #059669; }
+.size-badge.l2 { background: rgba(217,119,6,0.12);  color: #d97706; }
+.size-badge.l3 { background: rgba(225,29,72,0.12);  color: #e11d48; }
+
+.hit-cell.green  { color: var(--emerald); font-weight: 700; }
+.hit-cell.orange { color: var(--amber);   font-weight: 700; }
+.hit-cell.red    { color: var(--rose);    font-weight: 700; }
+.miss-cell { color: var(--rose); font-weight: 700; }
+.mono { font-variant-numeric: tabular-nums; }
+.date-cell { color: var(--text-muted); font-size: 10.5px; }
+
+.btn-delete {
+  background: none; border: none; cursor: pointer; font-size: 13px;
+  padding: 3px 5px; border-radius: var(--radius-xs);
+  opacity: 0.28; transition: opacity 0.12s, transform 0.14s;
+}
+.btn-delete:hover { opacity: 1; transform: scale(1.2); }
+
+/* Detail panel slides up from below the table */
+.history-detail {
+  margin-top: 4px; padding: 20px;
+  animation: fadeInUp 0.25s var(--ease-out) both;
+}
+
+.history-detail-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px;
+}
+
+.history-detail-header h3 { font-size: 16px; font-weight: 800; letter-spacing: -0.035em; }
+
+.btn-close {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-xs); color: var(--text-secondary);
+  font-size: 11px; font-weight: 500; padding: 5px 12px; cursor: pointer;
+  transition: all 0.14s;
+}
+.btn-close:hover { border-color: var(--rose); color: var(--rose); background: rgba(225,29,72,0.05); }

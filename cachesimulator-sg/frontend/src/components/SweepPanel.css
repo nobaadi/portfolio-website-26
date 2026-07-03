@@ -1,0 +1,32 @@
+.sweep-panel {
+  padding: 20px;
+  animation: fadeInUp 0.3s var(--ease-out) both;
+}
+
+.sweep-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.sweep-header h3 {
+  font-size: 16px; font-weight: 800; letter-spacing: -0.035em;
+}
+
+.sweep-sub {
+  font-size: 11px; color: var(--text-muted); margin-top: 3px;
+  text-transform: capitalize;
+}
+
+.sweep-cycles-chart {
+  margin-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+}
+
+.btn-close {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-xs); color: var(--text-secondary);
+  font-size: 11px; font-weight: 500; padding: 5px 12px; cursor: pointer;
+  transition: all 0.14s; white-space: nowrap;
+}
+.btn-close:hover { border-color: var(--rose); color: var(--rose); background: rgba(225,29,72,0.05); }

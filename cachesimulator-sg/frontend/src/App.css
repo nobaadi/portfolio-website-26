@@ -1,0 +1,94 @@
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---- Header ---- */
+.app-header {
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.90);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 58px;
+  z-index: 100;
+  animation: fadeIn 0.4s var(--ease-out) both;
+}
+
+.header-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; cursor: pointer; }
+
+.header-icon { font-size: 20px; line-height: 1; }
+
+.header-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.header-title .serif { font-size: 18px; vertical-align: -1px; }
+
+.header-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 0.01em; margin-top: 2px; }
+
+/* ---- Pill nav ---- */
+.header-nav {
+  display: flex; gap: 2px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+}
+
+.nav-btn {
+  background: transparent; border: none;
+  color: var(--text-secondary);
+  padding: 5px 15px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px; font-weight: 500;
+  transition: color 0.15s, background 0.15s, transform 0.15s var(--ease-spring);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+
+.nav-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  transform: translateY(-1px);
+}
+
+.nav-btn.active {
+  background: var(--text-primary);
+  color: #fff;
+  font-weight: 600;
+  animation: popIn 0.3s var(--ease-spring);
+}
+
+/* ---- Main — fills remaining height, no overflow ---- */
+.app-main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 18px 36px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-btn {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text-secondary);
+  font-size: 15px; padding: 6px 10px; cursor: pointer;
+  transition: all 0.2s; margin-left: 6px;
+}
+.theme-btn:hover { border-color: var(--text-muted); transform: scale(1.1); }
+
+@media (max-width: 768px) {
+  .app-header { padding: 0 16px; }
+  .app-main   { padding: 14px 16px; }
+}
