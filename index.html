@@ -418,7 +418,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
   <div class="glass-card contact-wrap reveal">
     <div class="sec-eyebrow">04 / contact</div>
     <div class="contact-big">Open to internships in <em>data engineering,<br>ML engineering, and SWE</em>.</div>
-    <div class="contact-body">I'm looking for internship opportunities in <strong>data engineering, ML engineering, data analytics, and software engineering</strong>. I enjoy working across the full stack: designing pipelines, building models, writing APIs, and shipping working interfaces on real data.<br><br>If your team is building with data or AI in Singapore, I'd like to connect.</div>
+    <div class="contact-body">I'm looking for internship opportunities in <strong>data engineering, ML engineering, data analytics, and software engineering</strong>. I enjoy working across the full stack: designing pipelines, building models, writing APIs, and shipping working interfaces on real data.<br><br>If your team is building with data or AI in Singapore, I'd love to connect.</div>
     <div class="contact-row">
       <div class="contact-links">
         <a href="mailto:aadikaul@gmail.com" class="c-link">Email -></a>
@@ -722,7 +722,7 @@ pcards.forEach((card,idx)=>{
       ctx.strokeStyle=col+(hov?'dd':'66');ctx.lineWidth=hov?1.5:.8;ctx.stroke();
       ctx.shadowBlur=0;
       // Label
-      ctx.font=`${hov?'500 ':'300 '}${Math.max(8.5,Math.min(11.5,n.r*.46))}px 'Geist Mono',monospace`;
+      ctx.font=`${hov?'500 ':'300 '}${Math.max(6.5,Math.min(11.5,n.r*2.83/n.id.length))}px 'Geist Mono',monospace`;
       ctx.fillStyle=hov?'#fff':col;
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(n.id,n.x,n.y);
