@@ -274,8 +274,8 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           </div>
           <div class="ft-files">
             <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>LLMs / RAG</div>
-            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>TF-IDF / Retrieval</div>
-            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>Claude API</div>
+            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>TF-IDF / BM25</div>
+            <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>LLM APIs</div>
             <div class="ft-file"><div class="ft-file-bar" style="background:#276749"></div>Prompt Engineering</div>
           </div>
         </div>
@@ -314,7 +314,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas id="ch0"></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv0">N/A</div><div class="pc-lbl">ROC-AUC score</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">FraudIQ: Fraud Intelligence Platform</div><div class="ph-body">Engineered 6 fraud features (velocity, geo-deviation, device novelty, amount z-score) from the IEEE-CIS dataset (590k transactions, 3.5% fraud rate). Ensemble of Isolation Forest + Logistic Regression + Random Forest achieves ROC-AUC 0.97. SHAP values explain per-transaction risk contribution. Full-stack: React + TypeScript + FastAPI + PostgreSQL. Live on Vercel and Render.</div></div>
+            <div><div class="ph-title">FraudIQ: Fraud Intelligence Platform</div><div class="ph-body">Engineered 6 fraud features (velocity, geo-deviation, device novelty, amount z-score) from the IEEE-CIS dataset (590k transactions, 3.5% fraud rate). Ensemble of Isolation Forest + Logistic Regression + Random Forest achieves ROC-AUC 0.97 with 74.9% precision on flagged transactions. SHAP values explain per-transaction risk contribution. Full-stack: React + TypeScript + FastAPI + PostgreSQL. Live on Vercel and Render.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">scikit-learn</span><span class="ph-tech">SHAP</span><span class="ph-tech">React</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span></div>
           </div>
         </div>
@@ -335,7 +335,7 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas id="ch1"></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv1">N/A</div><div class="pc-lbl">price data points tracked</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Async ETL pipeline pulling CPI data from SingStat TableBuilder API (M214011). Upserts revised figures without creating duplicates. APScheduler runs background refresh on a configurable interval. Includes z-score anomaly detection endpoint that flags categories where latest inflation is 2+ standard deviations above historical mean. React + TypeScript frontend with personal spending weights.</div></div>
+            <div><div class="ph-title">PriceWatch SG: Inflation Tracker</div><div class="ph-body">Async ETL pipeline pulling CPI data from SingStat TableBuilder API (M214011). Tracks 15 everyday SG items -- hawker food to supermarket staples -- sourced from SingStat's monthly survey of 150+ outlets island-wide. Upserts revised figures without creating duplicates. APScheduler runs background refresh on a configurable interval. Z-score anomaly detection flags categories where the latest rate is 2+ standard deviations above historical mean (min 6 periods). React + TypeScript frontend with personal spending weights.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">PostgreSQL</span><span class="ph-tech">APScheduler</span><span class="ph-tech">React</span><span class="ph-tech">SingStat API</span></div>
           </div>
         </div>
@@ -351,17 +351,18 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-head">
             <div class="pc-kind">Data | Analytics | SG</div>
             <div class="pc-title">HDB Resale Intelligence</div>
-            <div class="pc-desc">Public housing prices in Singapore vary significantly by town, storey, and flat type, but the raw transaction data is hard to explore. This platform ingests real resale records from data.gov.sg and makes them queryable through a live dashboard.</div>
+            <div class="pc-desc">Public housing prices in Singapore vary significantly by town, storey, and flat type, but the raw transaction data is hard to explore. This platform ingests real resale records from data.gov.sg and makes them queryable through an interactive dashboard.</div>
           </div>
           <div class="pc-chart"><canvas></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv3">N/A</div><div class="pc-lbl">resale price index</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">HDB Resale Intelligence</div><div class="ph-body">Paginated ETL from data.gov.sg API (resource d_8b84c4ee58e3cfc0ece0d773c8ca6abc) with graceful offline fallback. All filter parameters use SQLAlchemy named bindings -- no f-string SQL injection. SQL layer includes 7 window function queries: LAG MoM delta, RANK/DENSE_RANK/NTILE town ranking, rolling 3-month average with ROWS BETWEEN, storey premium via FIRST_VALUE, YoY change with CTE chain. Chart.js dashboard, 4 tabs, no build step.</div></div>
+            <div><div class="ph-title">HDB Resale Intelligence</div><div class="ph-body">Paginated ETL from data.gov.sg API (resource d_8b84c4ee58e3cfc0ece0d773c8ca6abc) covering 26 towns with graceful offline fallback. All filter parameters use SQLAlchemy named bindings -- no f-string SQL injection. SQL layer includes 7 window function queries: LAG MoM delta, RANK/DENSE_RANK/NTILE town ranking, rolling 3-month average with ROWS BETWEEN, storey premium via FIRST_VALUE, YoY change with CTE chain. Chart.js dashboard, 4 tabs, no build step.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">SQLite</span><span class="ph-tech">data.gov.sg</span><span class="ph-tech">Chart.js</span><span class="ph-tech">Docker</span></div>
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://github.com/nobaadi/hdb-intelligence" target="_blank" class="pc-live">GitHub -></a>
+          <a href="https://nobaadi.github.io/hdb-intelligence/" target="_blank" class="pc-live" title="Backend on Render free tier. May take ~30s to wake on first load">View Live -></a>
+          <a href="https://github.com/nobaadi/hdb-intelligence" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub -></a>
           <span class="pc-hint">hover |</span>
         </div>
       </div>
@@ -376,12 +377,13 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
           <div class="pc-chart"><canvas></canvas></div>
           <div class="pc-stat"><div class="pc-val" id="sv4">N/A</div><div class="pc-lbl">reports indexed</div></div>
           <div class="pc-hover">
-            <div><div class="ph-title">EarningsIQ: Financial Report Q&A</div><div class="ph-body">4-step RAG pipeline built from scratch: chunk (500-word overlapping windows, 80-word overlap), index (TF-IDF + Okapi BM25, no vector DB), retrieve (top-4 passages with relevance scores normalised to [0, 100]), generate (Llama 3.1 8B via Groq with retrieved context). Includes a /api/compare endpoint that runs both retrieval methods on the same query and returns an agreement rate. Users can upload their own PDFs. Ships with DBS 2023 and Singapore Airlines FY22/23 report excerpts.</div></div>
+            <div><div class="ph-title">EarningsIQ: Financial Report Q&A</div><div class="ph-body">4-step RAG pipeline built from scratch: chunk (500-word overlapping windows, 80-word overlap), index (TF-IDF + Okapi BM25, no vector DB), retrieve (top-4 passages in &lt;1ms -- pure in-memory, no network call on retrieval), generate (Llama 3.1 8B via Groq with retrieved context). Includes a /api/compare endpoint that runs both retrieval methods on the same query and returns an agreement rate. Users can upload their own PDFs. Ships with DBS 2023 and Singapore Airlines FY22/23 report excerpts.</div></div>
             <div class="ph-techs"><span class="ph-tech">Python</span><span class="ph-tech">FastAPI</span><span class="ph-tech">BM25</span><span class="ph-tech">TF-IDF</span><span class="ph-tech">Groq</span><span class="ph-tech">Docker</span></div>
           </div>
         </div>
         <div class="pc-footer">
-          <a href="https://github.com/nobaadi/earningsiq" target="_blank" class="pc-live">GitHub -></a>
+          <a href="https://nobaadi.github.io/earningsiq/" target="_blank" class="pc-live" title="Backend on Render free tier. May take ~30s to wake on first load">View Live -></a>
+          <a href="https://github.com/nobaadi/earningsiq" target="_blank" class="pc-live" style="border-color:var(--border);color:var(--muted);">GitHub -></a>
           <span class="pc-hint">hover |</span>
         </div>
       </div>
@@ -416,12 +418,12 @@ footer{border-top:1px solid var(--border);padding:18px 64px;display:flex;justify
   <div class="glass-card contact-wrap reveal">
     <div class="sec-eyebrow">04 / contact</div>
     <div class="contact-big">Open to internships in <em>data engineering,<br>ML engineering, and SWE</em>.</div>
-    <div class="contact-body">I'm looking for internship opportunities in <strong>data engineering, ML engineering, data analytics, and software engineering</strong>. I enjoy working across the full stack: designing pipelines, building models, writing APIs, and shipping working interfaces on real data.<br><br>If your team is building with data or AI in Singapore, I'd like to connect.</div>
+    <div class="contact-body">I'm looking for internship opportunities in <strong>data engineering, ML engineering, data analytics, and software engineering</strong>. I enjoy working across the full stack: designing pipelines, building models, writing APIs, and shipping working interfaces on real data.<br><br>If your team is building with data or AI in Singapore, I'd love to connect!</div>
     <div class="contact-row">
       <div class="contact-links">
         <a href="mailto:aadikaul@gmail.com" class="c-link">Email -></a>
         <a href="https://www.linkedin.com/in/aadi-kaul" target="_blank" class="c-link">LinkedIn -></a>
-        <a href="Aadi_Kaul_Resume_2026.pdf" target="_blank" class="c-link">Resume -></a>
+        <a href="Aadi_Resume_2026_JUL.pdf" target="_blank" class="c-link">Resume -></a>
       </div>
     </div>
   </div>
@@ -575,15 +577,15 @@ pcards.forEach((card,idx)=>{
     {id:'NumPy',        cat:0, r:17}, // 2
     {id:'C++',          cat:0, r:14}, // 3
     {id:'SQL',          cat:1, r:21}, // 4
-    {id:'PostgreSQL',   cat:1, r:16}, // 5
-    {id:'SQLite',       cat:1, r:14}, // 6
-    {id:'scikit-learn', cat:2, r:21}, // 7
-    {id:'Random Forest',cat:2, r:18}, // 8
+    {id:'PostgreSQL',   cat:1, r:20}, // 5
+    {id:'SQLite',       cat:1, r:16}, // 6
+    {id:'scikit-learn', cat:2, r:24}, // 7
+    {id:'Random Forest',cat:2, r:26}, // 8
     {id:'SHAP',         cat:2, r:16}, // 9
-    {id:'LLMs / RAG',   cat:2, r:19}, // 10
+    {id:'LLMs / RAG',   cat:2, r:22}, // 10
     {id:'TF-IDF',       cat:2, r:15}, // 11
     {id:'React',        cat:3, r:17}, // 12
-    {id:'TypeScript',   cat:3, r:16}, // 13
+    {id:'TypeScript',   cat:3, r:20}, // 13
     {id:'FastAPI',      cat:3, r:17}, // 14
     {id:'Node.js',      cat:3, r:14}, // 15
     {id:'Chart.js',     cat:4, r:15}, // 16
@@ -720,7 +722,7 @@ pcards.forEach((card,idx)=>{
       ctx.strokeStyle=col+(hov?'dd':'66');ctx.lineWidth=hov?1.5:.8;ctx.stroke();
       ctx.shadowBlur=0;
       // Label
-      ctx.font=`${hov?'500 ':'300 '}${Math.max(8.5,Math.min(11.5,n.r*.46))}px 'Geist Mono',monospace`;
+      ctx.font=`${hov?'500 ':'300 '}${Math.max(6.5,Math.min(11.5,n.r*2.83/n.id.length))}px 'Geist Mono',monospace`;
       ctx.fillStyle=hov?'#fff':col;
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(n.id,n.x,n.y);
